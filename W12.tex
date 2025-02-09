@@ -1,0 +1,492 @@
+\documentclass[12pt,a4paper]{article}
+\input{math_setup}
+
+\begin{document}
+\title{ENG1005 Week12 Workshop Problem Set Solutions}
+\author{Yang Xingyu (33533563)}
+\date{\today}
+\maketitle
+
+\section*{Question 1}
+Let $f(t) = 1000$, $\kappa = 0.1$, we have
+\[
+v^{\prime}(t)= 1000-0.1(v(t))^2.
+\]
+
+In derivative form:
+\[
+\frac{dv}{dt} = 1000-0.1(v(t))^2.
+\]
+
+Divided by $1000-0.1(v(t))^2$ on both sides:
+\[
+\frac{dv}{1000-0.1(v(t))^2} = dt,
+\]
+we can integrate on both sides to find $v(t)$, and thus it's a separable ODE. 
+Also note that the subject terms are not all linear, hence it is non-linear.
+
+Hence, it's a non-linear, separable ODE.
+
+\section*{Question 2}
+Hence, we solve the ode
+\[
+\frac{dv}{1000-0.1(v(t))^2} = dt
+\]
+by integrating on both sides.
+\[
+\int \frac{1}{1000-0.1v^{2}} dv =\int dt+C
+\]
+Factor out 10:
+\[
+10\int \frac{1}{10000-v^2}=\int dt+C
+\]
+By
+\[
+\int \frac{d x}{a^2-x^2}=\frac{1}{2 a} \ln \left|\frac{a+x}{a-x}\right|+C,
+\]
+we have $a = 100$, and thus
+$$\begin{aligned}
+10 \cdot \frac{1}{200} \ln\left|\frac{100+v}{100-v}\right| &= t+C \\
+\ln\left|\frac{100+v}{100-v}\right| &= 20(t+C)
+\end{aligned}$$
+Applying exponential on both sides:
+\[
+\frac{100+v}{100-v} = e^{20t}\cdot e^{20C}.
+\]
+
+Let $e^{20C} = C_1$,
+\[
+100+v = C_1 e^{20 t}(100-v).
+\]
+\[
+100+v = 100C_1e^{20t} - C_1 ve^{20t}
+\]
+\[
+v(1+C_1e^{20t}) = 100\left(C_1 e^{20 t}-1\right)
+\]
+Hence,
+\[
+v(t)=\frac{100\left(C_1 e^{20 t}-1\right)}{1+C_1 e^{20 t}}.
+\]
+
+Now we can solve the IVP that $v(0) = 0$.
+\[
+0=\frac{100\left(C_1 e^0-1\right)}{1+C_1 e^0}
+\implies
+C_1-1=0
+\implies
+C_1 = 1.
+\]
+Hence,
+\[
+v(t)=\frac{100\left( e^{20 t}-1\right)}{1+e^{20 t}}.
+\]
+
+\begin{remark}
+    Below is the proof for the integration formula.
+\[
+\int \frac{dx}{a^2 - x^2} = \frac{1}{2a} \ln \left| \frac{a + x}{a - x} \right| + C
+\]
+
+\begin{proof}
+First, we observe that \( a^2 - x^2 \) is a difference of squares, which can be factored as:
+
+\[
+a^2 - x^2 = (a - x)(a + x)
+\]
+
+This allows us to decompose the integrand using partial fraction decomposition. We seek constants \( A \) and \( B \) such that:
+
+\[
+\frac{1}{(a - x)(a + x)} = \frac{A}{a - x} + \frac{B}{a + x}
+\]
+
+To determine \( A \) and \( B \), multiply both sides by \( (a - x)(a + x) \):
+
+\[
+1 = A(a + x) + B(a - x)
+\]
+
+Expanding the right-hand side, we get:
+
+\[
+1 = A a + A x + B a - B x
+\]
+
+Grouping like terms gives:
+
+\[
+1 = (A + B)a + (A - B)x
+\]
+
+By comparing coefficients of the constant term and the term involving \( x \), we obtain the system of equations:
+
+\[
+A + B = 0 \quad \text{and} \quad A - B = 1
+\]
+
+Solving this system, we find \( A = \frac{1}{2a} \) and \( B = \frac{1}{2a} \). Therefore, we have:
+
+\[
+\frac{1}{(a - x)(a + x)} = \frac{1}{2a} \left( \frac{1}{a - x} + \frac{1}{a + x} \right)
+\]
+
+Now, substituting this result back into the original integral:
+
+\[
+\int \frac{dx}{a^2 - x^2} = \frac{1}{2a} \int \left( \frac{1}{a - x} + \frac{1}{a + x} \right) dx
+\]
+
+Next, we integrate each term separately. The integrals are standard logarithmic integrals:
+
+\[
+\int \frac{dx}{a - x} = -\ln |a - x| + C_1 \quad \text{and} \quad \int \frac{dx}{a + x} = \ln |a + x| + C_2
+\]
+
+Thus, the integral becomes:
+
+\[
+\int \frac{dx}{a^2 - x^2} = \frac{1}{2a} \left( -\ln |a - x| + \ln |a + x| \right) + C
+\]
+
+Using the logarithmic identity \( \ln A - \ln B = \ln \left( \frac{A}{B} \right) \), we can combine the logarithms:
+
+\[
+\int \frac{dx}{a^2 - x^2} = \frac{1}{2a} \ln \left| \frac{a + x}{a - x} \right| + C
+\]
+
+This completes the proof.
+\end{proof}
+
+\end{remark}
+
+\section*{Question 3}
+It is sure that $\lim_{t \to \infty} v(t) = 100$.
+
+By L'Hôpital's Rule,
+\begin{remark}
+ L'Hôpital's Rule is derived from  Cauchy’s Mean Value Theorem.
+ \begin{theorem}[Cauchy's Mean Value Theorem ]
+Assume that $f(x)$ and $g(x)$ are continuous on the closed interval $[a, b]$ and differentiable on $(a, b)$. Assume further that $g^{\prime}(x) \neq 0$ on $(a, b)$. Then there exists at least one value $c$ in $(a, b)$ such that
+$$
+\frac{f^{\prime}(c)}{g^{\prime}(c)}=\frac{f(b)-f(a)}{g(b)-g(a)}
+$$
+\end{theorem}
+Cauchy's Mean Value Theorem is also a generalisation of the mean value theorem
+\begin{proof}
+Define a new auxiliary function \( h(x) \) as follows:
+\[
+h(x) = f(x) - \frac{f(b) - f(a)}{g(b) - g(a)} (g(x) - g(a)).
+\]
+This function is continuous on \([a, b]\) and differentiable on \((a, b)\) since \( f(x) \) and \( g(x) \) are continuous and differentiable on the respective intervals.
+
+Notice that \( h(a) = f(a) \) and:
+\[
+h(b) = f(b) - \frac{f(b) - f(a)}{g(b) - g(a)} (g(b) - g(a)) = f(b) - (f(b) - f(a)) = f(a).
+\]
+Thus, we have \( h(a) = h(b) \), which means that \( h(x) \) satisfies the conditions of Rolle's Theorem.
+
+By Rolle's Theorem, there exists at least one point \( c \in (a, b) \) such that \( h^{\prime}(c) = 0 \). Now, differentiate \( h(x) \):
+\[
+h^{\prime}(x) = f^{\prime}(x) - \frac{f(b) - f(a)}{g(b) - g(a)} g^{\prime}(x).
+\]
+At \( x = c \), we have:
+\[
+h^{\prime}(c) = f^{\prime}(c) - \frac{f(b) - f(a)}{g(b) - g(a)} g^{\prime}(c) = 0.
+\]
+Solving for \( \frac{f^{\prime}(c)}{g^{\prime}(c)} \), we get:
+\[
+\frac{f^{\prime}(c)}{g^{\prime}(c)} = \frac{f(b) - f(a)}{g(b) - g(a)}.
+\]
+This completes the proof.
+\end{proof}
+
+\end{remark}
+\begin{theorem}[L'hôpital's Rule]
+L'hôpital's Rule Assume that $f(x)$ and $g(x)$ are differentiable on an open interval containing $a$ and that
+$$
+f(a)=g(a)=0
+$$
+Also assume that $g^{\prime}(x) \neq 0$ for $x$ near but not equal to $a$. Then
+$$
+\lim _{x \rightarrow a} \frac{f(x)}{g(x)}=\lim _{x \rightarrow a} \frac{f^{\prime}(x)}{g^{\prime}(x)}
+$$
+provided that the limit on the right exists. The conclusion also holds if $f(x)$ and $g(x)$ are differentiable for $x$ near (but not equal to) $a$ and
+$$
+\lim _{x \rightarrow a} f(x)= \pm \infty \quad \text { and } \quad \lim _{x \rightarrow a} g(x)= \pm \infty
+$$
+
+\end{theorem}
+\begin{remark}
+\begin{proof}
+Consider a new function defined as:
+\[
+h(x) = \frac{f(x)}{g(x)}
+\]
+for \( x \) near \( a \), but \( g(x) \neq 0 \).
+
+To apply the Cauchy Mean Value Theorem, we consider the interval \( [x, a] \), and functions \( f(x) \) and \( g(x) \), which are differentiable on this interval. Since \( f(a) = g(a) = 0 \), the Cauchy Mean Value Theorem guarantees the existence of some \( c \in (x, a) \) such that:
+\[
+\frac{f(x) - f(a)}{g(x) - g(a)} = \frac{f'(c)}{g'(c)}.
+\]
+Since \( f(a) = 0 \) and \( g(a) = 0 \), this simplifies to:
+\[
+\frac{f(x)}{g(x)} = \frac{f'(c)}{g'(c)}.
+\]
+Now, taking the limit as \( x \to a \), we obtain:
+\[
+\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{c \to a} \frac{f'(c)}{g'(c)}.
+\]
+Since \( c \to a \) as \( x \to a \), we conclude that:
+\[
+\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)},
+\]
+provided the limit on the right-hand side exists.
+
+For the case where both \( f(x) \) and \( g(x) \) tend to \( \pm \infty \), a similar argument holds. In such cases, the application of the Cauchy Mean Value Theorem follows the same principle, and we can establish the same relationship:
+\[
+\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)}.
+\]
+Thus, the proof of L'Hôpital's Rule is complete.
+\end{proof}
+\end{remark}
+First, observe that as \( t \to \infty \), both the numerator \( 100(e^{20t} - 1) \) and the denominator \( 1 + e^{20t} \) tend towards infinity. Hence, the limit is of the indeterminate form \( \frac{\infty}{\infty} \), and we can apply L'Hôpital's Rule.
+
+L'Hôpital's Rule tells us that for limits of the form \( \frac{\infty}{\infty} \), we can compute the limit of the derivatives of the numerator and denominator. Define:
+
+\[
+f(t) = 100(e^{20t} - 1), \quad g(t) = 1 + e^{20t}
+\]
+
+We differentiate the numerator and denominator as follows:
+
+\[
+f'(t) = 100 \cdot 20e^{20t} = 2000e^{20t}
+\]
+\[
+g'(t) = 20e^{20t}
+\]
+
+We now substitute these derivatives into the limit:
+
+\[
+\lim_{t \to \infty} \frac{v(t)}{g(t)} = \lim_{t \to \infty} \frac{2000e^{20t}}{20e^{20t}}
+\]
+
+Simplifying the expression:
+
+\[
+\lim_{t \to \infty} \frac{2000e^{20t}}{20e^{20t}} = \lim_{t \to \infty} \frac{2000}{20} = 100
+\]
+
+Thus, the limit is:
+
+\[
+\lim_{t \to \infty} v(t) = 100
+\]
+
+Therefore, using L'Hôpital's Rule, we conclude that:
+
+\[
+\lim_{t \to \infty} \frac{100\left( e^{20t} - 1 \right)}{1 + e^{20t}} = 100
+\]
+
+\begin{remark}
+Yet the best approach here is applying Limits of Polynomial Division straight away.
+\begin{corollary}[Limits of Polynomial Division]
+For the limits of polynomial sequences like
+\[
+\lim_{n \to \infty} \frac{a_0 n^m + a_1 n^{m-1} + \cdots + a_{m-1} n + a_m}{b_0 n^k + b_1 n^{k-1} + \cdots + b_{k-1} n + b_k}.
+\]
+where \(m \leq k\), \(a_0 \neq 0\), and \(b_0 \neq 0\).
+\[
+\lim_{n \to \infty} \frac{a_0 n^m + a_1 n^{m-1} + \cdots + a_{m-1} n + a_m}{b_0 n^k + b_1 n^{k-1} + \cdots + b_{k-1} n + b_k} = 
+\begin{cases} 
+\frac{a_0}{b_0}, & \text{if } m = k, \\
+0, & \text{if } m < k, \\
+\infty, & \text{if } m > k.
+\end{cases}
+\]
+\end{corollary}
+\begin{proof}
+We need to find the limit
+\[
+\lim_{n \to \infty} \frac{a_0 n^m + a_1 n^{m-1} + \cdots + a_{m-1} n + a_m}{b_0 n^k + b_1 n^{k-1} + \cdots + b_{k-1} n + b_k}.
+\]
+
+First, factor \(n^m\) from the numerator and \(n^k\) from the denominator:
+\[
+\lim_{n \to \infty} \frac{n^m \left(a_0 + a_1 \frac{1}{n} + \cdots + a_{m-1} \frac{1}{n^{m-1}} + a_m \frac{1}{n^m}\right)}{n^k \left(b_0 + b_1 \frac{1}{n} + \cdots + b_{k-1} \frac{1}{n^{k-1}} + b_k \frac{1}{n^k}\right)}.
+\]
+
+Simplify the expression:
+\[
+\lim_{n \to \infty} \frac{n^{m-k} \left(a_0 + a_1 \frac{1}{n} + \cdots + a_{m-1} \frac{1}{n^{m-1}} + a_m \frac{1}{n^m}\right)}{b_0 + b_1 \frac{1}{n} + \cdots + b_{k-1} \frac{1}{n^{k-1}} + b_k \frac{1}{n^k}}.
+\]
+
+Consider three cases:
+
+1. If \(m < k\), then \(n^{m-k} \to 0\) as \(n \to \infty\), so the limit is \(0\).
+
+2. If \(m = k\), then the highest degree terms dominate. As \(n \to \infty\), the terms involving \(\frac{1}{n}\) tend to \(0\), so the limit is \(\frac{a_0}{b_0}\).
+
+3. If \(m > k\), then \(n^{m-k} \to \infty\) as \(n \to \infty\), so the limit is \(\infty\).
+
+Therefore,
+\[
+\lim_{n \to \infty} \frac{a_0 n^m + a_1 n^{m-1} + \cdots + a_{m-1} n + a_m}{b_0 n^k + b_1 n^{k-1} + \cdots + b_{k-1} n + b_k} = 
+\begin{cases} 
+\frac{a_0}{b_0}, & \text{if } m = k, \\
+0, & \text{if } m < k, \\
+\infty, & \text{if } m > k.
+\end{cases}
+\]
+\end{proof}
+
+By this, we know at the first sight that the limit will be evaluated to 100.
+\end{remark}
+
+\section*{Question 4}
+The ODE is not separable and still non-linear when $t$ is not a constant function.
+
+
+
+
+\section*{Question 5}
+By matching up the combination of same degree subject, we have
+\[
+v(t)^2=\left(a_0+a_1 t+a_2 t^2+a_3 t^3+\cdots\right)\left(a_0+a_1 t+a_2 t^2+a_3 t^3+\cdots\right)
+\]
+Suppose 
+\[
+(v(t))^2=b_0+b_1 t+b_2 t^2+b 3 t^3+b_4 t^4+\ldots,
+\]
+by combing terms with the same degree, we have.
+\[
+v(t)^2=a_0^2+2 a_0 a_1 t+\left(2 a_0 a_2+a_1^2\right) t^2+\left(2 a_0 a_3+2 a_1 a_2\right) t^3+\left(2 a_0 a_4+2 a_1 a_3+a_2^2\right) t^4+\cdots.
+\]
+
+Hence, $b_0 = a_0^2$, $b_1=2a_0a_1$, $b_2=2a_0a_1+a_1^2$, $b_3=2 a_0 a_3+2 a_1 a_2$,
+$b_4=2 a_0 a_4+2 a_1 a_3+a_2^2$.
+
+
+\section*{Question 6}
+Now we use Maclaurin Series to solve
+\[
+v^{\prime}(t)=t-(v(t))^2.
+\]
+
+We have assumed that 
+\begin{equation}\label{w12:vt}
+v(t)= \sum_{i=0}^{\infty}a_i t^i = a_0+a_1 t+a_2 t^2+a_3 t^3+a_4 t^4+\ldots,
+\end{equation}
+
+so we have
+\begin{equation}\label{w12:vpt}
+v^\prime (t) = \sum_{i=1}^{\infty}ia_it^{i-1} = a_1+ 2a_2 t + 3a_3 t^2 + 4a_4 t^3+\ldots,
+\end{equation}
+and from last question:
+\[
+v(t)^2=a_0^2+2 a_0 a_1 t+\left(2 a_0 a_2+a_1^2\right) t^2+\left(2 a_0 a_3+2 a_1 a_2\right) t^3+\left(2 a_0 a_4+2 a_1 a_3+a_2^2\right) t^4+\cdots.
+\]
+
+Using the open form, we can combine the terms and write a system of equations by matching the coefficients on both sides in
+\[
+v^\prime (t) + (v(t))^2 = t.
+\]
+
+\[
+\begin{cases}
+a_1 + a_0^2 = 0\\
+2a_2 + 2a_0a_1 = 1\\
+3a_3+ 2a_0a_2 + a_1^2 = 0\\
+4a_4 + 2a_0a_3 + 2a_1a_2 = 0\\
+\end{cases}
+\]
+
+Note that $a_0=v(0)=1$, so
+\[
+\begin{cases}
+a_0=1\\
+a_1 = -1\\
+a_2 = \frac{3}{2}\\
+a_3 = -\frac{4}{3}\\
+a_4 = \frac{17}{12}
+\end{cases}.
+\]
+Thus, 
+\[
+v(t) = 1 - t + \frac{3}{2}t^2 -\frac{4}{3}t^3 + \frac{17}{12}t^4+\ldots.
+\]
+
+\section*{Question 7}
+When $t=0$,
+\[
+v^\prime (0)  = 0 - (v(0))^2 = -1.
+\]
+\section*{Question 8}
+By implicit differentiation:
+\[
+v^{\prime \prime}(t)=1-2 v(t) v^{\prime}(t)
+\]
+\[
+v^{\prime \prime}(0)=1-2 v(0) v^{\prime}(0) = 3
+\]
+
+\section*{Question 9}
+\[
+v^{(3)}(t)=\frac{d(v^{\prime \prime})}{dt} = -2\left(v^{\prime}(t) v^{\prime}(t)+v(t) v^{\prime \prime}(t)\right)
+\]
+\[
+v^{(3)}(0)=\frac{d(v^{\prime \prime})}{dt} = -2\left(v^{\prime}(0) v^{\prime}(0)+v(0) v^{\prime \prime}(0)\right)
+=-8
+\]
+and
+\[
+v^{(4)}(t)=\frac{d}{d t} v^{(3)}(t)=-2\left(2 v^{\prime}(t) v^{\prime \prime}(t)+v^{\prime}(t) v^{\prime \prime}(t)+v(t) v^{(3)}(t)\right).
+\]
+Simplifying:
+\[
+v^{(4)}(t)=-2\left(3 v^{\prime}(t) v^{\prime \prime}(t)+v(t) v^{(3)}(t)\right),
+\]
+\[
+v^{(4)}(t)=-2\left(3 v^{\prime}(t) v^{\prime \prime}(t)+v(t) v^{(3)}(t)\right)
+\]
+Hence,
+\[
+v^{(4)}(0)=-6 \cdot v^{\prime}(0) \cdot v^{\prime \prime}(0)-2 \cdot v(0) \cdot v^{(3)}(0)
+=34.
+\]
+\section*{Question 10}
+By taylor's theorem, we have
+\[
+f(x)=\sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x-a)^n 
+=
+f(a)+f^{\prime}(a)(x-a)+\frac{f^{\prime \prime}(a)}{2!}(x-a)^2+\frac{f^{(3)}(a)}{3!}(x-a)^3+\cdots
+\]
+So when $t=0$,
+\[
+v(t)=v(0)+v^{\prime}(0) t+\frac{v^{\prime \prime}(0)}{2!} t^2+\frac{v^{\prime \prime \prime}(0)}{3!} t^3+\frac{v^{\prime \prime \prime \prime}(0)}{4!} t^4 +\ldots
+\]
+Using previous results:
+\[
+v(t)=1-t+\frac{3}{2} t^2-\frac{4}{3} t^3+\frac{17}{12} t^4+\ldots
+\]
+
+\begin{remark}
+The method of solving differential equations using power series expansions is fundamentally based on expressing the unknown function as a series in terms of powers of \( (t - t_0) \). By assuming a solution of the form
+\[
+v(t) = \sum_{n=0}^\infty a_n (t - t_0)^n,
+\]
+we effectively embed the problem within the infinite-dimensional vector space of analytic functions around \( t_0 \), where the monomials \( \{ (t - t_0)^n \} \) serve as a basis.
+
+Substituting this series into the differential equation transforms it into an infinite system of algebraic equations involving the coefficients \( a_n \). Equating the coefficients of like powers of \( (t - t_0) \) yields recursive relations among the \( a_n \), allowing us to determine these coefficients sequentially. This process constructs the solution space by explicitly finding the coordinates of \( v(t) \) in terms of the basis elements.
+
+The set of all sequences \( \{ a_n \} \) satisfying the recursion relations forms a subspace of the infinite-dimensional space of sequences. In linear differential equations, this solution space can often be decomposed into a direct sum of smaller subspaces, each corresponding to a fundamental solution of the differential equation. Each subspace represents the contributions from different linearly independent solutions, and their direct sum encapsulates the general solution.
+
+Thus, by using the coefficients \( a_n \) to build the solution space and its subspaces, we see that the power series method not only provides a means to solve the differential equation but also reveals the underlying linear structure of its solution space. The recursive determination of coefficients illustrates the interplay between the differential operator and the vector space structure, highlighting how subspaces and their direct sums combine to form the complete set of solutions.
+
+\end{remark}
+
+The source code of the assignment is available \href{https://www.overleaf.com/read/xfncwbffbqks#5bc191}{here}.
+\end{document}

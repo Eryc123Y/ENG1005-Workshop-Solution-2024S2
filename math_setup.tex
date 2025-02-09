@@ -1,0 +1,279 @@
+% math_setup.tex
+% Essential Packages
+\RequirePackage{etex}
+\usepackage{comment}
+\usepackage{etex}
+\usepackage{listings}
+\usepackage{amsmath}    % Advanced math typesetting
+\usepackage{amsfonts}   % Math fonts
+\usepackage{amssymb}    % Math symbols
+\usepackage{amsthm}     % Theorem environment
+\usepackage{mathtools}  % More symbols
+\usepackage{tikz}       % For drawing diagrams
+\usepackage{tikz-network}
+\usepackage{pgfplots}
+\usetikzlibrary{calc, arrows.meta, positioning, quotes}
+\usepackage{mdframed}
+\usepackage{float}
+\usepackage{thmtools}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=green, urlcolor=red]{hyperref}
+\usepackage{csquotes}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\pgfplotsset{compat=1.18}
+%\usepackage{mdframed}
+
+% Wolfram Code Block
+\lstdefinelanguage{Wolfram}{
+    keywords={Sum, If, For, While, Do, Plot, Table, Range, Integrate, NIntegrate, D, Solve, NSolve, DSolve, NDSolve, LinearSolve, Expand, Factor, Simplify, FullSimplify, Module, Block, With},
+    sensitive=true,
+    morecomment=[l]{(*},
+    morecomment=[s][\itshape]{(*}{*)},
+    morestring=[b]",
+    morestring=[b]',
+}
+
+\lstset{
+    language=Wolfram,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green}\itshape,
+    stringstyle=\color{red},
+    showstringspaces=false,
+    frame=single,
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{lightgray!20}
+}
+
+% add ref
+\addbibresource{references.bib}
+% Define colors
+\definecolor{theoremcolor}{RGB}{230,230,250}  % Light purple
+\definecolor{lemmacolor}{RGB}{240,248,255}    % Alice Blue
+\definecolor{propcolor}{RGB}{240,255,240}     % Light green
+\definecolor{corollarycolor}{RGB}{255,250,240} % Light orange
+\definecolor{axiomcolor}{RGB}{255,240,245}    % Lavender blush
+\definecolor{definitioncolor}{RGB}{240,255,255} % Light cyan
+\definecolor{remarkcolor}{RGB}{245,245,245}   % Light gray
+\definecolor{notationcolor}{RGB}{255,250,205}
+
+% Boxed environments
+
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    bodyfont=\normalfont,
+    headpunct={:},
+    postheadspace=1em,
+    mdframed={
+        linecolor=black,
+        backgroundcolor=definitioncolor,
+        topline=true,
+        bottomline=true,
+        leftline=true,
+        rightline=true,
+        roundcorner=5pt
+    }
+]{boxeddefinitionstyle}
+
+\declaretheorem[style=boxeddefinitionstyle, name=Definition]{definition}
+
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    bodyfont=\normalfont,
+    headpunct={:},
+    postheadspace=1em,
+    mdframed={
+        linecolor=black,
+        backgroundcolor=theoremcolor,
+        topline=true,
+        bottomline=true,
+        leftline=true,
+        rightline=true,
+        roundcorner=5pt
+    }
+]{boxedtheoremstyle}
+
+% Theorem
+\declaretheorem[style=boxedtheoremstyle, name=Theorem]{theorem}
+
+% Lemma (adjust color)
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    bodyfont=\normalfont,
+    headpunct={:},
+    postheadspace=1em,
+    mdframed={
+        linecolor=black,
+        backgroundcolor=lemmacolor,
+        topline=true,
+        bottomline=true,
+        leftline=true,
+        rightline=true,
+        roundcorner=5pt
+    }
+]{boxedlemmastyle}
+\declaretheorem[style=boxedlemmastyle, name=Lemma]{lemma}
+
+% Proposition (adjust color)
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    bodyfont=\normalfont,
+    headpunct={:},
+    postheadspace=1em,
+    mdframed={
+        linecolor=black,
+        backgroundcolor=propcolor,
+        topline=true,
+        bottomline=true,
+        leftline=true,
+        rightline=true,
+        roundcorner=5pt
+    }
+]{boxedpropstyle}
+\declaretheorem[style=boxedpropstyle, name=Proposition]{proposition}
+
+% Corollary (adjust color)
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    bodyfont=\normalfont,
+    headpunct={:},
+    postheadspace=1em,
+    mdframed={
+        linecolor=black,
+        backgroundcolor=corollarycolor,
+        topline=true,
+        bottomline=true,
+        leftline=true,
+        rightline=true,
+        roundcorner=5pt
+    }
+]{boxedcorollarystyle}
+\declaretheorem[style=boxedcorollarystyle, name=Corollary]{corollary}
+
+% Axiom (boxed)
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    bodyfont=\normalfont,
+    headpunct={:},
+    postheadspace=1em,
+    mdframed={
+        linecolor=black,
+        backgroundcolor=axiomcolor,
+        topline=true,
+        bottomline=true,
+        leftline=true,
+        rightline=true,
+        roundcorner=5pt
+    }
+]{boxedaxiomstyle}
+\declaretheorem[style=boxedaxiomstyle, name=Axiom]{axiom}
+
+% Remark environment
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    bodyfont=\normalfont,
+    headpunct={:},
+    postheadspace=1em,
+    mdframed={
+        linecolor=black,
+        backgroundcolor=remarkcolor,
+        topline=true,
+        bottomline=true,
+        leftline=true,
+        rightline=true,
+        roundcorner=5pt
+    }
+]{remarkstyle}
+\declaretheorem[style=remarkstyle, name=Remark, numbered=no]{remark}
+% Normal, non-italic environments
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    bodyfont=\normalfont,
+    headpunct={:},
+    postheadspace=1em,
+]{normalstyle}
+
+% Notation environment
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    bodyfont=\normalfont,
+    headpunct={:},
+    postheadspace=1em,
+    mdframed={
+        linecolor=black,
+        backgroundcolor=notationcolor,
+        topline=true,
+        bottomline=true,
+        leftline=true,
+        rightline=true,
+        roundcorner=5pt
+    }
+]{boxednotationstyle}
+\declaretheorem[style=boxednotationstyle, name=Notation]{notation}
+
+
+% Note environment (more noticeable, with separators, no background, no end symbol)
+\newenvironment{note}[1][]
+    {\par\vspace{0.5em}\noindent\rule{\textwidth}{0.4pt}\par\vspace{0.5em}%
+    \textbf{Note\if\relax\detokenize{#1}\relax\else: #1\fi}\par}
+    {\par\vspace{0.5em}\noindent\rule{\textwidth}{0.4pt}\par\vspace{0.5em}}
+
+\declaretheorem[style=normalstyle, name=Note, numbered=no]{oldnote}
+
+\declaretheorem[style=normalstyle, name=Example]{example}
+\declaretheorem[style=normalstyle, name=Exercise]{exercise}
+\declaretheorem[style=normalstyle, name=Statement]{statement}
+\declaretheorem[style=normalstyle, name=Solution, numbered=no]{solution}
+
+% Proof environment (normal, non-italic, with QED symbol)
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    bodyfont=\normalfont,
+    headpunct={:},
+    postheadspace=1em,
+    qed=$\blacksquare$
+]{proofstyle}
+
+\declaretheorem[style=proofstyle, name=Proof]{customproof}
+
+% Shorthand
+\newcommand{\vect}[1]{\mathbf{#1}} % For regular vectors
+\newcommand{\uvec}[1]{\hat{\mathbf{#1}}} % For unit vectors
+\newcommand{\prob}[1]{
+    \section*{Problem #1}
+}
+\newcommand{\R}{\mathbb{R}} % Real numbers
+\newcommand{\Z}{\mathbb{Z}} % Integers
+\newcommand{\C}{\mathbb{C}} % Complex numbers
+\newcommand{\N}{\mathbb{N}} % Natural numbers
+\newcommand{\Q}{\mathbb{Q}} % Rational numbers
+\newcommand{\Hq}{\mathbb{H}} % Quaternions
+\newcommand{\F}{\mathbb{F}} % Finite fields
+\newcommand{\Proj}{\mathbb{P}} % Projective space
+\newcommand{\K}{\mathbb{K}} % Arbitrary field
+\newcommand{\T}{\mathbb{T}} % Torus or sometimes denoted for Topological space
+\newcommand{\A}{\mathbb{A}} % Affine space
+\newcommand{\0}{\mathbf{0}} % Zero vector
+\newcommand{\mbf}[1]{\mathbf{#1}} 
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\dom}[1]{
+    \operatorname{dom}(#1)
+}
+
+
+
+
+% Layout
+\geometry{a4paper, margin=1in}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\today}
+\lhead{\textbf{ENG1005 Engineering Mathematics}}
+\rfoot{Page \thepage}

@@ -1,0 +1,345 @@
+\documentclass[12pt,a4paper]{article}
+\input{math_setup}
+
+\begin{document}
+
+\newcommand{\df}[2]{
+    \frac{d#1}{d#2}
+}
+
+\title{ENG1005 Week9 Workshop Problem Set Solutions}
+\author{Yang Xingyu (33533563)}
+\date{\today}
+\maketitle
+
+\section*{Question 1}
+\begin{solution}
+    It's a closed system where all flow has equal inflow and outflow, no external flow of water.
+\end{solution}
+
+\section*{Question 2, 3}
+\begin{solution}
+Since all lake's volume of water remain constant, we can model the the change of pollutant over time by the inflow and outflow of pollutant. Since any amount of pollutant would instantaneously dissolve and spread evenly, throughout each lake, we can express the outflow of pollution by the flow rate and concentration of pollutant in the lake.
+\[
+\operatorname{outflow_i} = 24000 \times \frac{x_i}{V_i},
+\]
+where 24000 is the constant flow rate of all rivers, $x_i$ is the amount of pollutant in lake $i$, and $V_i$ is the volume of lake $i$.
+
+When consider all lakes, since we know all lake's volume of water remain constant, we can use the inflow from the previous lake and the outflow to the next lake to model the change of pollutant concentration.
+
+This allows us to find the adjacency matrix for the system such that
+\[
+\frac{d \Vec{x}}{d t}=A \Vec{x} = 
+\left[\begin{array}{ccc}
+-3 & 0 & 8 \\
+3 & -1 & 0 \\
+0 & 1 & -8
+\end{array}\right] 
+\begin{bmatrix}
+    x_1\\x_2\\x_3
+\end{bmatrix}.
+\]
+\end{solution}
+
+\section*{Question 4}
+\begin{solution}
+We first solve the eigenvalues.
+\[
+|A-\lambda I|=
+\begin{vmatrix}
+-3-\lambda & 0 & 8 \\
+3 & -1-\lambda & 0 \\
+0 & 1 & -8-\lambda
+\end{vmatrix}
+=0
+\]
+
+\[
+|A-\lambda I|=(-3-\lambda) \cdot\left|\begin{array}{cc}
+-1-\lambda & 0 \\
+1 & -8-\lambda
+\end{array}\right|-0 \cdot\left|\begin{array}{cc}
+3 & 0 \\
+0 & -8-\lambda
+\end{array}\right|+8 \cdot\left|\begin{array}{cc}
+3 & -1-\lambda \\
+0 & 1
+\end{array}\right|
+\]
+Expanding, we have
+\[
+|A-\lambda I|=-3 \lambda^2-27 \lambda-24-\lambda^3-9 \lambda^2-8 \lambda+24 = 0.
+\]
+Collecting terms, we have:
+\[
+|A-\lambda I|=-\lambda^3-12 \lambda^2-35 \lambda = 0
+\]
+So
+\[
+|A-\lambda I|= \lambda^3+12 \lambda^2+35 \lambda = 0
+\]
+The characteristic equation can be factorised as
+\[
+\lambda (\lambda+7)(\lambda+5) = 0.
+\]
+Hence, we have three eigenvalues: $0$, $-5$, and $-7$.
+
+Now we can find the three corresponding eigenvectors.
+
+When $\lambda = 0$
+\[
+\begin{aligned}
+-3x + 8z &= 0 \\
+3x - y &= 0 \\
+y - 8z &= 0
+\end{aligned}
+\implies
+\begin{cases}
+    x = \frac{8}{3} z\\
+    y = 8 z\\
+    z = t
+\end{cases}.
+\]
+So one corresponding eigenvector is $\Vec{x}=\left[8, 24, 3\right]$.
+
+When $\lambda = -5$
+\[
+\begin{aligned}
+2x + 8z &= 0 \\
+3x + 4y &= 0 \\
+y - 3z &= 0
+\end{aligned}
+\implies
+\begin{cases}
+    x = -4 z\\
+    y = 3 z\\
+    z = t
+\end{cases}.
+\]
+So one corresponding eigenvector is $\Vec{x}=\left[-4, 3, 1\right]$.
+
+When $\lambda = -7$,
+\[
+\begin{aligned}
+4x + 8z &= 0 \\
+3x + 6y &= 0 \\
+y - z &= 0
+\end{aligned}
+\implies
+\begin{cases}
+    x = -2 z\\
+    y = z\\
+    z = t
+\end{cases}.
+\]
+So one corresponding eigenvector is $\Vec{x}=\left[-2, 1, 1\right]$.
+\end{solution}
+
+\section*{Question 5}
+\begin{solution}
+Now we will solve the system of homogeneous linear ODEs:
+\[
+\frac{d \Vec{x}}{d t}=A \Vec{x} = 
+\left[\begin{array}{ccc}
+-3 & 0 & 8 \\
+3 & -1 & 0 \\
+0 & 1 & -8
+\end{array}\right] 
+\begin{bmatrix}
+    x_1\\x_2\\x_3
+\end{bmatrix}.
+\].
+
+The general solution can be expressed by the linear combination of eigenvectors that
+\[
+\vec{x}(t)=
+A e^{0t} \begin{bmatrix}-2\\1\\1\end{bmatrix}
++B e^{-5t}\begin{bmatrix}-4\\3\\1\end{bmatrix}
++C e^{-7t}\begin{bmatrix}8\\ 24\\ 3\end{bmatrix}
+\]
+
+\begin{remark}
+We can use the eigenvalue and eigenvector method to derive the general solution of a system of homogeneous linear ODEs.
+
+We assume that the solution to the system takes the exponential form $\Vec{x}(t) = e^{\lambda t} \Vec{v}$, where $\lambda$ is an eigenvalue and $\Vec{v}$ is the corresponding eigenvector.
+
+Substituting this form into the system of differential equations $\frac{d \Vec{x}}{dt} = A \Vec{x}$, we obtain the eigenvalue problem $A \Vec{v} = \lambda \Vec{v}$. This ensures that the assumed solution satisfies the original system.
+
+Since the matrix $A$ has multiple eigenvalues and corresponding eigenvectors, each eigenvalue-eigenvector pair provides a solution of the form $e^{\lambda_i t} \Vec{v_i}$. Therefore, the general solution to the system is a linear combination of these individual solutions:
+\[
+\Vec{x}(t) = C_1 e^{\lambda_1 t} \Vec{v_1} + C_2 e^{\lambda_2 t} \Vec{v_2} + C_3 e^{\lambda_3 t} \Vec{v_3}.
+\]
+
+We can determine the constants $C_1, C_2, C_3$ by applying the initial conditions of the system. This results in the particular solution that satisfies both the system of ODEs and the initial conditions.
+\end{remark}
+\end{solution}
+
+\section*{Question 6}
+\begin{solution}
+Recall the initial condition that
+\[
+\vec{x}(0) = \begin{bmatrix}
+    10\\0\\0
+\end{bmatrix} 
+\implies
+\left[\begin{array}{c}
+10 \\
+0 \\
+0
+\end{array}\right]=A\left[\begin{array}{c}
+-2 \\
+1 \\
+1
+\end{array}\right]+B\left[\begin{array}{c}
+-4 \\
+3 \\
+1
+\end{array}\right]+C\left[\begin{array}{c}
+8 \\
+24 \\
+3
+\end{array}\right]
+\]
+This gives the system of equations:
+\begin{align*}
+10 &= -2A - 4B + 8C \\
+0 &= A + 3B + 24C\\
+0 &= A + B + 3C 
+\end{align*}
+\text{The augmented matrix is:}
+\[
+\begin{bmatrix}
+-2 & -4 & 8 & 10 \\
+1 & 3 & 24 & 0 \\
+1 & 1 & 3 & 0
+\end{bmatrix}
+\]
+
+We can get the RREF that:
+\[
+\begin{bmatrix}
+1 & 0 & 0 & \frac{15}{7} \\
+0 & 1 & 0 & -3 \\
+0 & 0 & 1 & \frac{2}{7}
+\end{bmatrix}.
+\]
+
+So the solution is 
+$
+\begin{cases}
+    A = \frac{15}{7}\\
+    B = -3\\
+    C = \frac{2}{7}
+\end{cases}.
+$
+
+Hence, the solution to the system of linear differential equation is
+\[
+\vec{x}(t)=
+\frac{15}{7} e^{-7t} \begin{bmatrix}-2\\1\\1\end{bmatrix}
+-3 e^{-5t}\begin{bmatrix}-4\\3\\1\end{bmatrix}
++\frac{2}{7} e^{0t}\begin{bmatrix}8\\ 24\\ 3\end{bmatrix}
+\]
+\end{solution}
+\section*{question 7}
+\begin{solution}
+In the long run, i.e., when $t\to +\infty$,
+\[
+\lim_{t\to +\infty}\vec{x}(t) = 
+\frac{2}{7}\begin{bmatrix}\frac{8}{3}\\ 8\\ 1\end{bmatrix}
+=
+\left[\begin{array}{l}
+\frac{16}{7} \\
+\frac{48}{7} \\
+\frac{6}{7}
+\end{array}\right].
+\]
+\end{solution}
+
+Therefore, in the end, most of the pollutant ($\frac{48}{7}$ kg) will be detected in lake 2, while lake 1 and lake 3 will be $\frac{16}{7}$ kg and $\frac{6}{7}$ kg respectively.
+
+\section*{Question 8}
+\begin{solution}
+When a filtering plant is set between lake 3 and lake 1, the only inflow to lake 1 will be halved, and thus the new system of linear ODEs will be
+\[
+\frac{d \vec{x}}{d t}=\left[\begin{array}{ccc}
+-3 & 0 & 4 \\
+3 & -1 & 0 \\
+0 & 1 & -8
+\end{array}\right]\left[\begin{array}{l}
+x_1 \\
+x_2 \\
+x_3
+\end{array}\right].
+\]
+\section*{Question 9}
+We are given the matrix:
+
+\[
+B = \begin{bmatrix}
+-3 & 0 & 4 \\
+3 & -1 & 0 \\
+0 & 1 & -8
+\end{bmatrix}
+\]
+
+To find the eigenvalues, we compute the characteristic equation:
+
+\[
+|A - \lambda I| = 
+\begin{vmatrix}
+-3 - \lambda & 0 & 4 \\
+3 & -1 - \lambda & 0 \\
+0 & 1 & -8 - \lambda
+\end{vmatrix} = 0
+\]
+
+Expanding the determinant, we get:
+
+\[
+|A - \lambda I| = (-3 - \lambda) \cdot 
+\begin{vmatrix}
+-1 - \lambda & 0 \\
+1 & -8 - \lambda
+\end{vmatrix} 
+- 0 \cdot \begin{vmatrix}
+3 & 0 \\
+1 & -8 - \lambda
+\end{vmatrix}
++ 4 \cdot 
+\begin{vmatrix}
+3 & -1 - \lambda \\
+0 & 1
+\end{vmatrix}
+\]
+
+Expanding, we have
+\[
+|A - \lambda I| = (-3 - \lambda)(\lambda^2 + 9\lambda + 8) + 12.
+\]
+
+Simplifying:
+\[
+-\lambda^3 - 12\lambda^2 - 35\lambda -12= 0
+\]
+
+Factorising:
+\[
+-(\lambda+4)\left(\lambda^2+8 \lambda+3\right)=0
+\]
+So $\lambda = -4$ is a solution.
+
+Now we solve $\lambda^2+8 \lambda+3=0$.
+
+\[
+(\lambda + 4)^2 = 13 \implies \lambda = -4 \pm \sqrt{13}.
+\]
+
+So the eigenvalues are $-4, -4 + \sqrt{13}, -4 - \sqrt{13}$.
+\end{solution}
+
+\section*{Question 10}
+\begin{solution}
+    The pollutant vector $\vec{x}$ will be $\vec{0}$ in the end, as all exponential coefficients converge to 0, because there is no zero eigenvalue. This means that all pollutant will be removed.
+\end{solution}
+\end{document}

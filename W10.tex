@@ -1,0 +1,301 @@
+\documentclass[12pt,a4paper]{article}
+\input{math_setup}
+
+\begin{document}
+
+\newcommand{\df}[2]{
+    \frac{d#1}{d#2}
+}
+
+\title{ENG1005 Week10 Workshop Problem Set Solutions}
+\author{Yang Xingyu (33533563)}
+\date{\today}
+\maketitle
+
+\section*{Question 1}
+\begin{solution}
+We will express the velocity vector:
+\begin{equation}\label{10:1}
+    \Vec{v}=[{v}_x,{v}_y]\in \R^2,
+\end{equation}
+
+by decomposing the speed of the water $\Vec{v}_w$ and the speed of the swimmer $\Vec{v}_s$ on the x and y-direction.
+\begin{equation}\label{10:2}
+    \large
+    \begin{cases}
+        {v_x} = \Vec{v}_{wx} + \Vec{v}_{sx}\\
+        {v_y} = \Vec{v}_{wy} + \Vec{v}_{sy}
+    \end{cases}
+\end{equation}
+
+Since
+\begin{quote}
+    \textit{the water in the canal is flowing in the positive y-direction with a speed $s \geq 0$}
+\end{quote}
+we only need to consider the vertical component $s$, as the horizontal component of water speed is 0. So we have
+\begin{equation}\label{10:3}
+    \large
+    \begin{cases}
+        \Vec{v}_{wx} = 0\\
+        \Vec{v}_{wy} = s
+    \end{cases}
+\end{equation}
+When it comes to the swimmer, it's not possible to find a functional relation of $s$ components on $t$ that is algebraically expressible, hence, we proceed to add another layer of abstraction that make them a higher order function in terms of $\theta(t)$, where $t$ is time starting from commencing the motion in the coordinate, $\theta$ is the angled between the positional vector of the swimmer and the x-axis, and $\theta(t)\in(-\frac{\pi}{2}, \frac{\pi}{2}), \, t>0$.
+\begin{note}
+    The interval is not closed as it is stipulated that in the end the swimmer will hit $(0,0)$.
+\end{note}
+
+Hence, we can decompose $\Vec{v}_s$ on x, y-direction using trigonometrical functions, where 
+$\|\Vec{v}_s \| = c, \, c>0$.
+\begin{equation}\label{10:4}
+    \large
+    \begin{cases}
+        \Vec{v}_{sx} = -\|\Vec{v}_s \|\cos{\theta}=-c\cos{\theta}\\
+        \Vec{v}_{sy} = -\|\Vec{v}_s \|\sin{\theta}=-c\sin{\theta}
+    \end{cases}
+\end{equation}
+
+By \eqref{10:1}, \eqref{10:2}, \eqref{10:3}, \eqref{10:4}
+\[
+ \Vec{v} = [-c\cos{\theta}, s - c\sin{\theta} ].
+\]
+
+Expressing $\sin{\theta}, \cos{\theta}$ in terms of $x, y$, we have
+\[
+\Vec{v} = \left[\frac{-c x}{\sqrt{x^2+y^2}}, s-\frac{c y}{\sqrt{x^2+y^2}} \right].
+\]
+\end{solution}
+
+\section*{Question 2}
+\begin{solution}
+From last question:
+\begin{equation}
+    \large
+    \begin{cases}
+        {v}_x = \frac{-c x}{\sqrt{x^2+y^2}} = \frac{dx}{dt}\\
+        {v}_y =  s-\frac{c y}{\sqrt{x^2+y^2}} = \frac{dy}{dt}
+    \end{cases}
+\end{equation}
+
+By chain rule
+\[
+\frac{dy}{dx} = \frac{dy}{dt} \frac{dt}{dx} = \frac{dy}{dt} \left(\frac{dx}{dt}\right)^{-1}.
+\]
+
+\begin{remark}[Rigorous Proof of Chain Rule Application]
+To rigorously justify the application of the chain rule in this context, we proceed as follows:
+
+\begin{proof}
+Given the parametric equations $x = x(t)$ and $y = y(t)$, we assume:
+\begin{enumerate}
+    \item $x(t)$ and $y(t)$ are differentiable functions of $t$.
+    \item $\frac{dx}{dt} \neq 0$ in the interval of interest.
+\end{enumerate}
+
+Define a function $F$ as:
+\[
+F(t) = y(x^{-1}(x(t)))
+\]
+where $x^{-1}$ is the local inverse function of $x(t)$ (which exists because $\frac{dx}{dt} \neq 0$).
+
+Applying the chain rule to $F(t)$:
+\[
+\frac{dF}{dt} = \frac{dy}{dx} \cdot \frac{dx}{dt}
+\]
+
+Observe that $F(t) = y(t)$, so:
+\[
+\frac{dF}{dt} = \frac{dy}{dt}
+\]
+
+Therefore, we have:
+\[
+\frac{dy}{dt} = \frac{dy}{dx} \cdot \frac{dx}{dt}
+\]
+
+Solving for $\frac{dy}{dx}$:
+\[
+\frac{dy}{dx} = \frac{dy/dt}{dx/dt}
+\]
+
+This proves the validity of the chain rule application in our context.
+\end{proof}
+
+\textbf{Note:} In our specific problem, we have $\frac{dx}{dt} = \frac{-cx}{\sqrt{x^2+y^2}} \neq 0$ (except when $x = 0$). Therefore, our application is valid as long as $x \neq 0$.
+\end{remark}
+
+Hence,
+\[
+\begin{aligned}
+    \frac{dy}{dx} &= \left( s-\frac{c y}{\sqrt{x^2+y^2}}\right)
+    \left( \frac{\sqrt{x^2+y^2}}{-c x}\right)\\
+    &=\frac{s\sqrt{x^2+y^2}}{-c x} + \frac{cy}{cx}\\
+    &=\frac{cy-s\sqrt{x^2+y^2}}{cx}.
+\end{aligned}
+\]
+
+\end{solution}
+
+\section*{Question 3}
+\begin{solution}
+$\frac{dy}{dx} = \frac{cy-s\sqrt{x^2+y^2}}{cx}$ is not linear and not separable.
+\begin{itemize}
+    \item It is non-linear because we have $\sqrt{x^2+y^2}$ term where the subject $y$ is not linear.
+    \item It is not separable as we cannot separate $x, y$ on the RHS as $x^2$ is bound in the numerator and can never appear in the denominator, so we cannot get the form $\frac{dy}{dx}=\frac{f(x)}{g(y)}$.
+\end{itemize}
+
+
+\end{solution}
+
+\section*{Question 4}
+\begin{solution}
+We introduce a new intermediate variable $u  = \frac{y}{x}$.
+
+\[
+\begin{aligned}
+    \frac{dy}{dx} &= \frac{cy-s\sqrt{x^2+y^2}}{cx}\\
+    &= \frac{cy}{cx} - \frac{s\sqrt{x^2+y^2}}{cx}\\
+    &=u - \frac{s\sqrt{x^2+y^2}}{cx} \qquad (u=\frac{y}{x})\\
+    &=u - \frac{s}{c}\sqrt{1+u^2} \qquad (y=ux)
+\end{aligned}
+\]
+
+By this substitution, we have 
+\begin{equation}\label{10:6}
+    \frac{dy}{dx} = g(u) = u - \frac{s}{c}\sqrt{1+u^2},
+\end{equation}
+where $u = \frac{y}{x}$.
+
+\end{solution}
+
+\section*{Question 5}
+\begin{solution}
+To find a new differential equation on $u$, we simply need to express the differential operator $\frac{du}{dx}$ in terms of $\frac{dy}{dx}$, using the previous substitution.
+\[
+\frac{du}{dx} = \frac{d\left(\frac{y}{x}\right)}{dx} = \frac{(dy/dx)x-y}{x^2} = \frac{dy/dx}{x}-\frac{y}{x^2}.
+\]
+By \eqref{10:6} and $y = ux$,
+\[
+\frac{d u}{d x}=\frac{u-\frac{s}{c} \sqrt{1+u^2}}{x}-\frac{u x}{x^2}=\frac{-\frac{s}{c} \sqrt{1+u^2}}{x}.
+\]
+
+The new ODE is separable, as we have $\frac{du}{dx} = \frac{1}{x}\left(-\frac{s}{c}\sqrt{1+u^2}\right)$, allowing us to separate two variables and integrate on both sides.
+
+\end{solution}
+
+\section*{Question 6}
+\begin{solution}
+Integrate on both sides and split constants:
+\[\int \frac{1}{x}dx=-\frac{c}{s} \int \frac{1}{\sqrt{1+u^2}}du.\]
+
+\[
+\int \frac{1}{x}dx = \ln{x} + C_1, 
+\]
+where $x > 0$.
+
+Let $u = \sinh{t}$,
+\[
+\int \frac{1}{\sqrt{1+u^2}}du = \int \frac{\cosh{t}}{1+\sinh^2{t}}dt = \int\frac{\cosh{t}}{\cosh{t}}dt = t + C_2 = \sinh^{-1}{u} + C_2.
+\]
+
+Hence, 
+\[
+\sinh^{-1}{u} = -\frac{s}{c}\ln{x} + C,
+\]
+\[
+u = \sinh{\left(-\frac{s}{c}\ln{x} + C\right)}
+\]
+where $C = C_1-C_2$.
+
+Since 
+\[
+\begin{cases}
+    y(w) = 0\\
+    x = w\\
+    u = \frac{y}{x}\implies u = 0
+\end{cases}
+\]
+we have
+\[
+0 = \sinh{\left(-\frac{s}{c}\ln{\omega} + C\right)}
+\implies 
+-\frac{s}{c}\ln{\omega} + C = 0,
+\]
+so $C = \frac{s}{c}\ln{\omega}$.
+
+So we can rewrite $u$:
+\[
+u = \sinh{\left(-\frac{s}{c}\ln{x} + \frac{s}{c}\ln{\omega}\right)}
+=\sinh{\left(\frac{s}{c}\ln{\frac{\omega}{x}}\right)}.
+\]
+
+Evaluating $\sinh{\left(\frac{s}{c}\ln{\frac{\omega}{x}}\right)}$:
+\[
+u=\frac{1}{2}\left(\left(\frac{w}{x}\right)^{\frac{s}{c}}-\left(\frac{x}{w}\right)^{\frac{s}{c}}\right)
+\]
+
+Note that $ u = \frac{y}{x}$:
+\[
+\begin{aligned}
+    y = xu &= \frac{x}{2}\left(\left(\frac{w}{x}\right)^{\frac{s}{c}}-\left(\frac{x}{w}\right)^{\frac{s}{c}}\right)\\
+    &=\frac{x}{2}\left(\left(\frac{x}{w}\right)^{-\frac{s}{c}}-\left(\frac{x}{w}\right)^{\frac{s}{c}}\right)\\
+    &=\frac{\omega}{2}\left(\frac{x}{\omega}\left(\frac{x}{w}\right)^{-\frac{s}{c}}-\left(\frac{x}{w}\right)^{\frac{s}{c}}\right)\\
+    &=\frac{w}{2}\left(\left(\frac{x}{w}\right)^{1-\frac{s}{c}}-\left(\frac{x}{w}\right)^{1+\frac{s}{c}}\right)
+\end{aligned}
+\]
+
+\end{solution}
+
+\section*{Question 7}
+\begin{solution}
+To determine if it is always possible for the swimmer to reach the point \(q = (0, 0)\), we need to analyze the given trajectory equation:
+
+\[
+y = y(x) = \frac{w}{2} \left( \left( \frac{x}{w} \right)^{1 - \frac{s}{c}} - \left( \frac{x}{w} \right)^{1 + \frac{s}{c}} \right)
+\]
+
+We need to check if the swimmer can reach the origin for different values of the speed ratio \(\frac{s}{c}\), considering the initial condition \(y(0) = 0\). We have three cases to examine: \(s > c\), \(s < c\), and \(s = c\).
+
+For the case where \(s > c\):
+
+\[
+y(x) = \frac{w}{2} \left( \left( \frac{x}{w} \right)^{1 - \frac{s}{c}} - \left( \frac{x}{w} \right)^{1 + \frac{s}{c}} \right)
+\]
+
+When \(s > c\), the power of the first term \(\left( \frac{x}{w} \right)^{1 - \frac{s}{c}}\) is negative, which means as \(x \to 0\), this term diverges to infinity. The second term \(\left( \frac{x}{w} \right)^{1 + \frac{s}{c}}\), with a positive power greater than 1, tends to 0 as \(x \to 0\). Thus, \(\lim_{x \to 0} y(x) \neq 0\). Therefore, the swimmer cannot reach the origin when \(s > c\).
+
+For the case where \(s < c\):
+
+\[
+y(x) = \frac{w}{2} \left( \left( \frac{x}{w} \right)^{1 - \frac{s}{c}} - \left( \frac{x}{w} \right)^{1 + \frac{s}{c}} \right)
+\]
+
+When \(s < c\), both terms have positive powers. Specifically, the first term has a power between 0 and 1, while the second term has a power greater than 1. As \(x \to 0\), both terms tend to 0. Thus, \(\lim_{x \to 0} y(x) = 0\), which means the swimmer can reach the origin when \(s < c\).
+
+For the case where \(s = c\), the trajectory equation becomes:
+
+\[
+y = \frac{w}{2} \left( \left( \frac{x}{w} \right)^{1 - 1} - \left( \frac{x}{w} \right)^{1 + 1} \right) = \frac{w}{2} \left( 1 - \left( \frac{x}{w} \right)^{2} \right)
+\]
+
+When \(x = 0\):
+
+\[
+y(0) = \frac{w}{2} \left( 1 - 0 \right) = \frac{w}{2} \neq 0
+\]
+
+Therefore, the swimmer cannot reach the origin when \(s = c\).
+
+In conclusion, the swimmer can only reach the origin if the swimming speed \(c\) is greater than the water current speed \(s\). Thus, the condition for the swimmer to reach the point \(q = (0, 0)\) is:
+
+\[
+s < c
+\]
+
+Intuitively, when the water current speed \(s\) is greater than or equal to the swimmer's speed \(c\), the swimmer is unable to overcome the flow and is pushed away, making it impossible to reach the origin. Only when the swimmer's speed \(c\) is greater than the current speed \(s\), the swimmer can successfully counteract the flow and reach the destination.
+
+\end{solution}
+
+
+The source code of the document is available \href{https://www.overleaf.com/read/xfncwbffbqks#5bc191}{here}.
+\end{document}

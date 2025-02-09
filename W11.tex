@@ -1,0 +1,795 @@
+\documentclass[12pt,a4paper]{article}
+\input{math_setup}
+
+\begin{document}
+
+\title{ENG1005 Week11 Workshop Problem Set Solutions}
+\author{Yang Xingyu (33533563)}
+\date{\today}
+\maketitle
+
+\section*{Some Extra Mathematical Titbits}
+
+This problem set seems quite interesting for me. It inspires me on the intersection of many topics in mathematics, and thus I decide to solve these problems to the best of my knowledge by as many ways as possible. 
+
+This solution involves
+\begin{itemize}
+    \item Eigenvalue and Eigenvector Problem of Matrix
+    \item Property of Linear Space or even more general algebraic structures (sadly I haven't do any abstract algebra, and can only make limited efforts to show some superficial relevance)
+    \item Linear Recurrence Relation (with constant coefficients)
+    \item Ordinary Differential Equations
+\end{itemize}
+
+and I will try to bring all these together.
+
+\begin{definition}[Linear Homogeneous Recurrence Relation with constant coefficients]\label{11:def_recc}
+A linear recurrence relation of degree $k$ with constant coefficients is a recurrence relation of the form
+
+$$
+a_n=c_1 a_{n-1}+c_2 a_{n-2}+\cdots+c_k a_{n-k}
+$$
+
+where $c_1, c_2, \ldots, c_k$ are real numbers, and $c_k \neq 0$.
+\end{definition}
+In a nutshell, homogeneous recursive relation involves only terms in the sequence $\{a_n\}$ and linear recurrence only involves linear combination of terms of the sequence.
+
+\begin{proposition}\label{11:char}
+For any linear homogeneous recurrence relation with constant coefficients of the form
+\[
+a_n = c_1 a_{n-1} + c_2 a_{n-2} + \cdots + c_k a_{n-k},
+\]
+
+there is a unique characteristic equation (bijection between recurrence relations and characteristic equations), that
+\[
+r^k-c_1 r^{k-1}-c_2 r^{k-2}-\cdots-c_{k-1} r-c_k=0,
+\]
+where $a_n = r^n$.
+\end{proposition}
+\begin{proof}
+    By $a_n = r^n$, substituting to the previous expression, we have
+    \[
+    r^n=c_1 r^{n-1}+c_2 r^{n-2}+\cdots+c_k r^{n-k}.
+    \]
+    Hence, 
+    \[
+    a_n = c_1 a_{n-1} + c_2 a_{n-2} + \cdots + c_k a_{n-k} \iff
+    r^n=c_1 r^{n-1}+c_2 r^{n-2}+\cdots+c_k r^{n-k}.
+    \]
+    Let both side be divided by $r^{n-k}$ (assuming that $r\neq0$), we have
+    \[
+    r^k=c_1 r^{k-1}+c_2 r^{k-2}+\cdots+c_k
+    \]
+    (This is what we call the characteristic equation of the linear recurrence relation.)
+    
+    So far, we have
+    \[
+    a_n=r^n \iff r^k=c_1 r^{k-1}+c_2 r^{k-2}+\cdots+c_k
+    \]
+    Subtract RHS on both sides, we have
+    \[
+    r^k-c_1 r^{k-1}-c_2 r^{k-2}-\cdots-c_{k-1} r-c_k=0.
+    \]
+    This completes the proof.
+\end{proof}
+
+For every linear recursive relation, we can always find a general solution (not unique). We can derive that there must be a solution in the way the same as how we treat homogeneous ODEs.
+\begin{proposition}[Solution of Linear Homogeneous Recurrence Relation with Constant Coefficients]
+For any linear homogeneous recurrence relation with constant coefficients of the form
+\[
+a_n = c_1 a_{n-1} + c_2 a_{n-2} + \cdots + c_k a_{n-k},
+\]
+where $c_1, c_2, \ldots, c_k$ are constants, there exists a solution of the form $a_n = r^n$, where $r$ is a constant.
+\end{proposition}
+
+\begin{proof}
+We will prove this using strong induction.
+
+\textbf{Base Case:} 
+We first verify the base cases for $n = 0, 1, \dots, k-1$. Specifically, we need to verify that the initial values $a_0, a_1, \dots, a_{k-1}$ satisfy the recurrence relation when $a_n = r^n$. For each $n = 0, 1, \dots, k-1$, substitute $a_n = r^n$ into the recurrence relation and ensure that the equality holds with the given initial conditions.
+
+For example, assume we have base case (for the recursion) $a_0 = k$, where $k$ is some constant, and we can verify 
+$$a_1 = c_1a_0 \iff r = c_1r^0.$$
+Since $k$ is any constant, $a_0=r^0=1$ is valid, and hence, $r = c_1$. Back to LHS, we have 
+\[
+c_1 = c_1a_0 = c_1r^0 = c_1.
+\]
+This justifies all our base cases, because it is also applicable for all the rest of cases ($n\in\mathbb{N}_2^{k-1}$).
+
+\textbf{Inductive Hypothesis:} 
+Assume that for $n = m, m-1, \dots, m-k+1$, the hypothesis $a_n = r^n$ holds true. That is, we assume that
+\[
+a_m = r^m, \quad a_{m-1} = r^{m-1}, \quad \dots, \quad a_{m-k+1} = r^{m-k+1}
+\]
+satisfy the recurrence relation.
+
+\textbf{Inductive Step:} 
+We need to prove that $a_{m+1} = r^{m+1}$ also satisfies the recurrence relation.
+From the recurrence relation, we have
+\[
+a_{m+1} = c_1 a_m + c_2 a_{m-1} + \cdots + c_k a_{m-k+1}
+\]
+Using the inductive hypothesis, substitute $a_m = r^m, a_{m-1} = r^{m-1}, \dots, a_{m-k+1} = r^{m-k+1}$:
+\[
+a_{m+1} = c_1 r^m + c_2 r^{m-1} + \cdots + c_k r^{m-k+1}
+\]
+Factor out $r^{m-k+1}$ from the right-hand side:
+\[
+a_{m+1} = r^{m-k+1} \left( c_1 r^{k-1} + c_2 r^{k-2} + \cdots + c_k \right)
+\]
+By proposition \eqref{11:char}, we have:
+\[
+r^k = c_1 r^{k-1} + c_2 r^{k-2} + \cdots + c_k
+\]
+
+Thus,
+\[
+a_{m+1} = r^{m-k+1} \cdot r^k = r^{m+1}
+\]
+This completes the inductive step.
+
+By the principle of strong induction, we have shown that $a_n = r^n$ is a solution for all $n \geq 0$, provided $r$ satisfies the equation $r^k = c_1 r^{k-1} + c_2 r^{k-2} + \cdots + c_k$.
+\end{proof}
+
+
+
+
+
+
+By fundamental theorem of algebra, we can find $n$ roots for a $n$-degree characteristic equation. In the same way as treating the solution for homogeneous ODEs, we can write the general solution of the homogeneous recurrence relation in linear combination of the $n$ roots (possibly repeated) that
+\[
+a_n=c_1 r_1^n+c_2 r_2^n+\cdots+c_k r_k^n,
+\]
+where $\{r_i\}_{i=1}^n$ are the $n$ roots of the equation.
+
+The form of the general solution can vary depending on the case of repeated roots and whether the roots are real or complex, and hence may involve trigonometric terms by Euler's identity or linear/non-linear factors to maintain linear independence of different terms. 
+
+Now we can formally find the way to solve linear recurrence by inverse engineering, since we have found out the form of the general solution for homogeneous linear recurrence relations with constant coefficients.
+
+\begin{theorem}[Solution of n-th Order Linear Homogeneous Recurrence Relations with Constant Coefficients]\label{w11:solution}
+Let \( c_1, c_2, \dots, c_k \) be real numbers. Suppose that the characteristic polynomial
+\[
+r^k - c_1 r^{k-1} - c_2 r^{k-2} - \cdots - c_k = 0
+\]
+has distinct roots \( r_1, r_2, \dots, r_k \). Then the sequence \( \{a_n\} \) is a solution of the recurrence relation
+\[
+a_n = c_1 a_{n-1} + c_2 a_{n-2} + \cdots + c_k a_{n-k}
+\]
+if and only if
+\[
+a_n = \alpha_1 r_1^n + \alpha_2 r_2^n + \cdots + \alpha_k r_k^n
+\]
+for \( n = 0, 1, 2, \ldots \), where \( \alpha_1, \alpha_2, \dots, \alpha_k \) are constants.
+\end{theorem}
+The proof is omitted, as it works in the same way as we express the solution of the recurrence, just in the other way round.
+\begin{example}
+Consider the recurrence relation
+\begin{equation*}
+    a_n = 3a_{n-1} - 2a_{n-2}.
+\end{equation*}
+The characteristic polynomial is given by
+\begin{equation*}
+    r^2 - 3r + 2 = 0.
+\end{equation*}
+Factoring the polynomial, we get
+\begin{equation*}
+    (r - 1)(r - 2) = 0,
+\end{equation*}
+which has distinct roots $r_1 = 1$ and $r_2 = 2$.
+
+Thus, the general solution is of the form
+\begin{equation}
+    a_n = \alpha_1 (1)^n + \alpha_2 (2)^n = \alpha_1 + \alpha_2 2^n,
+\end{equation}
+where $\alpha_1$ and $\alpha_2$ are constants determined by the initial conditions.
+
+Suppose the initial conditions are $a_0 = 1$ and $a_1 = 4$. We can determine $\alpha_1$ and $\alpha_2$ as follows:
+For $n = 0$:
+\begin{equation*}
+    a_0 = \alpha_1 + \alpha_2 = 1.
+\end{equation*}
+For $n = 1$:
+\begin{equation*}
+    a_1 = \alpha_1 + 2\alpha_2 = 4.
+\end{equation*}
+
+From $a_0 = 1$, we have
+\begin{equation*}
+    \alpha_1 + \alpha_2 = 1.
+\end{equation*}
+From $a_1 = 4$, we have
+\begin{equation*}
+    \alpha_1 + 2\alpha_2 = 4.
+\end{equation*}
+Subtracting these equations, we get
+\begin{equation*}
+    \alpha_2 = 3.
+\end{equation*}
+Substituting back, we find
+\begin{equation*}
+    \alpha_1 = 1 - \alpha_2 = -2.
+\end{equation*}
+Thus, the solution to the recurrence relation is
+\begin{equation}
+    a_n = -2 + 3 \cdot 2^n.
+\end{equation}
+\end{example}
+
+From this, we can find that solving such a linear recurrence relation is almost in an identical way to solve an linear homogeneous ODE with constant coefficients! How to explain this? Additionally, we can also find characteristic equation for a matrix when we solve eigenvalue-eigenvector problems, how can they be related?
+
+The fundamental reason is that in all these scenarios, despite in different context, we are dealing with linear operations closed on the same linear space. We can first introduce the idea of \textbf{Homogeneity}, which could explain what does homogeneous and non-homogeneous mean for a linear system.
+\begin{definition}[Homogeneity in Linear Spaces]
+Let $V$ and $W$ be vector spaces over a field $\F$, and let $L : V \to W$ be a linear operator. A system defined by the equation
+\[
+L(x) = b,
+\]
+where $x \in V$ and $b \in W$, is called homogeneous if and only if $b = 0_W$, where $0_W$ is the zero vector in $W$, and we call $L$ an \textbf{Linear Operator}.
+
+Formally, we can express this as:
+\[
+\text{The system } L(x) = b \text{ is homogeneous} \iff b = 0_W
+\]
+
+Properties of a homogeneous system include:
+
+\begin{enumerate}
+    \item Zero Solution: $L(0_V) = 0_W$, where $0_V$ is the zero vector in $V$.
+    \item Scaling Invariance: For all $x \in V$ and $\alpha \in F$,
+          \[
+          L(x) = 0_W \implies L(\alpha x) = 0_W
+          \]
+    \item Additivity of Solutions: For all $x, y \in V$,
+          \[
+          L(x) = 0_W \text{ and } L(y) = 0_W \implies L(x + y) = 0_W
+          \]
+\end{enumerate}
+\end{definition}
+
+Homogeniety can also be interpreted with linear operations in a linear space, as it is on of the major property of linear operators.
+\begin{definition}[Linear Operation/Operator]
+A mapping $T: V \to W$ between two vector spaces $V$ and $W$ over the same field (typically $\mathbb{R}$ or $\mathbb{C}$) is called a \textbf{linear operator} if it satisfies the following two properties for all $\mathbf{u}, \mathbf{v} \in V$ and all scalars $c \in \mathbb{R}$ (or $\mathbb{C}$):
+\begin{enumerate}
+    \item \textbf{Additivity}: 
+    \[ T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v}) \]
+    This means that the operator preserves vector addition.
+    
+    \item \textbf{Homogeneity (Scalar Multiplication)}: 
+    \[ T(c \mathbf{u}) = c T(\mathbf{u}) \]
+    This means that the operator commutes with scalar multiplication.
+\end{enumerate}
+
+In other words, a linear operator preserves both vector addition and scalar multiplication. If $T: V \to V$, then $T$ is also called a \textbf{linear transformation} on the vector space $V$.
+\end{definition}
+
+We can show that system of linear equation, linear recurrence relation, and differentiation (integration) are all under some kind of linear transformation.
+
+\begin{proposition}[System of Linear Equations is a Linear Transformation]
+The system of linear equations
+\[
+A \mathbf{x} = \mathbf{b}
+\]
+where \(A\) is an \(n \times n\) matrix and \(\mathbf{x}, \mathbf{b} \in \mathbb{R}^n\), defines a linear transformation \(T: \mathbb{R}^n \to \mathbb{R}^n\) given by \(T(\mathbf{x}) = A \mathbf{x}\).
+\end{proposition}
+
+\begin{proof}
+We verify that \(T(\mathbf{x}) = A \mathbf{x}\) satisfies the properties of a linear operator.
+
+\textbf{Additivity}: Let \(\mathbf{x}_1, \mathbf{x}_2 \in \mathbb{R}^n\). Then, by property of matrix:
+\[
+T(\mathbf{x}_1 + \mathbf{x}_2) = A (\mathbf{x}_1 + \mathbf{x}_2) = A \mathbf{x}_1 + A \mathbf{x}_2 = T(\mathbf{x}_1) + T(\mathbf{x}_2).
+\]
+\textbf{Homogeneity}: For any scalar \(c \in \mathbb{R}\) and vector \(\mathbf{x} \in \mathbb{R}^n\), we have:
+\[
+T(c \mathbf{x}) = A (c \mathbf{x}) = c A \mathbf{x} = c T(\mathbf{x}).
+\]
+Thus, \(T\) is a linear operator, and the system of linear equations can be described as a linear transformation.
+\end{proof}
+
+\begin{proposition}[Linear Recurrence Relation is a Linear Transformation]
+A linear recurrence relation of the form
+\[
+a_n = c_1 a_{n-1} + c_2 a_{n-2} + \cdots + c_k a_{n-k}
+\]
+can be expressed as a linear transformation \(T\) acting on the sequence \(\{a_n\}\).
+\end{proposition}
+
+\begin{proof}
+Define a linear operator \(T\) acting on the sequence \(\{a_n\}\) by:
+\[
+T(a_n) = a_n - c_1 a_{n-1} - c_2 a_{n-2} - \cdots - c_k a_{n-k}.
+\]
+We now show that \(T\) is a linear operator.
+
+\textbf{Additivity}: Let \(\{a_n\}\) and \(\{b_n\}\) be two sequences satisfying the recurrence relation. Then:
+\[
+T(a_n + b_n) = (a_n + b_n) - c_1 (a_{n-1} + b_{n-1}) - \cdots - c_k (a_{n-k} + b_{n-k})
+\]
+\[
+= \left( a_n - c_1 a_{n-1} - \cdots - c_k a_{n-k} \right) + \left( b_n - c_1 b_{n-1} - \cdots - c_k b_{n-k} \right)
+\]
+\[
+= T(a_n) + T(b_n).
+\]
+\textbf{Homogeneity}: For any scalar \( \alpha \) and sequence \(\{a_n\}\), we have:
+\[
+T(\alpha a_n) = \alpha a_n - c_1 (\alpha a_{n-1}) - \cdots - c_k (\alpha a_{n-k}) = \alpha T(a_n).
+\]
+
+Thus, the recurrence relation is governed by a linear operator.
+\end{proof}
+
+\begin{proposition}[Differentiation is a Linear Transformation]
+The differentiation operator \( D \) acting on a function \( f \in \R \) is a linear transformation, where
+\[
+D(f) = \frac{d}{dx} f(x).
+\]
+\end{proposition}
+
+\begin{proof}
+We show that the differentiation operator \( D \) is linear.
+
+\textbf{Additivity}: Let \(f(x)\) and \(g(x)\) be two differentiable functions. Then:
+\[
+D(f(x) + g(x)) = \frac{d}{dx} (f(x) + g(x)) = \frac{d}{dx} f(x) + \frac{d}{dx} g(x) = D(f(x)) + D(g(x)).
+\]
+\textbf{Homogeneity}: For any scalar \(c \in \mathbb{R}\) and function \(f(x)\), we have:
+\[
+D(c f(x)) = \frac{d}{dx} (c f(x)) = c \frac{d}{dx} f(x) = c D(f(x)).
+\]
+
+Thus, differentiation is a linear operator.
+\end{proof}
+
+\begin{proposition}[Integration is a Linear Transformation]
+The integration operator \( I \) acting on a function \( f \in C^1(\mathbb{R}) \) over an interval \([a, b]\) is a linear transformation, where
+\[
+I(f) = \int_a^b f(x) \, dx.
+\]
+\end{proposition}
+
+\begin{proof}
+We show that the integration operator \( I \) is linear.
+
+\textbf{Additivity}: Let \(f(x)\) and \(g(x)\) be two integrable functions. Then:
+\[
+I(f(x) + g(x)) = \int_a^b (f(x) + g(x)) \, dx = \int_a^b f(x) \, dx + \int_a^b g(x) \, dx = I(f(x)) + I(g(x)).
+\]
+\textbf{Homogeneity}: For any scalar \(c \in \mathbb{R}\) and function \(f(x)\), we have:
+\[
+I(c f(x)) = \int_a^b c f(x) \, dx = c \int_a^b f(x) \, dx = c I(f(x)).
+\]
+
+Thus, integration is a linear operator.
+
+\begin{remark}
+    Or just in one words: integration is the inverse operation of differentiation, and thus proven.
+\end{remark}
+\end{proof}
+
+These can explain why we can solve systems on these objects using similar methods that $y = y_h+y_p$, as fundamentally, we are not working on these objects, but in linear space! I believe further generalisation is still possible even after introducing these notions, such as discuss certain isomorphism or other relations in algebraic strictures, however, that's currently beyond me.
+
+Another interesting notion is that, we can now show the nature of characteristic equation, giving it a generalised definition beyond a matrix.
+
+
+\begin{definition}[Characteristic Equation of a Linear Operator]
+Let \( V \) be a finite-dimensional vector space over a field \( \mathbb{F} \), and let \( T: V \to V \) be a linear operator. The \textbf{characteristic equation} of the operator \( T \) is the equation obtained by finding the scalars \( \lambda \in \mathbb{F} \) such that \( T - \lambda I \) is not invertible, where \( I \) is the identity operator on \( V \). This is equivalent to solving:
+\[
+\det(T - \lambda I) = 0,
+\]
+where \( \det(T - \lambda I) \) is the determinant of the matrix representation of the operator \( T - \lambda I \) in a chosen basis of \( V \). The roots \( \lambda \) of this equation are called the \textbf{eigenvalues} of the operator \( T \).
+\end{definition}
+
+With this, we can sort out the relation between matrix and linear operation/operator. Though they have similar effect and meaning, yet they are different objects/concepts, as matrix can be treated as the tangible of the corresponding operator (this expression maybe not very professional and need to be regulated by ideas in category theory, but that's the only way I can describe it for now).
+
+\begin{definition}[Matrix Representation of a Linear Operator]
+Let \( T \) be a linear operator on a finite-dimensional vector space \( V \). If we fix a basis for \( V \), then \( T \) can be represented by a square matrix \( A \) such that the action of \( T \) on any vector \( \mathbf{v} \in V \) corresponds to matrix multiplication:
+\[
+T(\mathbf{v}) = A \mathbf{v}.
+\]
+In this case, the characteristic equation is written as:
+\[
+\det(A - \lambda I) = 0,
+\]
+where \( A \) is the matrix representation of \( T \), and \( I \) is the identity matrix of the same dimension as \( A \).
+\end{definition}
+
+Thus, we can also show that bijection exists between linear operation and matrix.
+\begin{proposition}[Bijection between Linear Operations and Matrices]
+For any linear operation $L$ defined on a vector space $V$, there are always a corresponding matrix in $V$ to express the operation such that
+\[
+L(\mathbf{v}) = A \mathbf{v},
+\]
+where $v\in V$, and vice versa.
+\end{proposition}
+\begin{proof}[Proof by Contradiction]
+We will prove the proposition using contradiction. 
+
+\textbf{Assume that the bijection between linear operators and matrices does not exist. }
+
+This means that there exists at least one linear operator \( L \) on a finite-dimensional vector space \( V \) such that no matrix \( A \) can represent the operation \( L \), i.e., there is no matrix \( A \) that satisfies \( L(\mathbf{v}) = A \mathbf{v} \) for all \( \mathbf{v} \in V \).
+
+Let \( V \) be a vector space with dimension \( n \), and let \( \{ \mathbf{e}_1, \mathbf{e}_2, \dots, \mathbf{e}_n \} \) be a basis for \( V \). Since \( L \) is a linear operator, it must satisfy the following properties for all \( \mathbf{v} \in V \):
+\begin{itemize}
+    \item \( L(c_1 \mathbf{v}_1 + c_2 \mathbf{v}_2) = c_1 L(\mathbf{v}_1) + c_2 L(\mathbf{v}_2) \), i.e., \( L \) is linear.
+\end{itemize}
+
+Now, consider how \( L \) acts on each basis vector \( \mathbf{e}_i \). Since \( L(\mathbf{e}_i) \in V \), and \( \{ \mathbf{e}_1, \mathbf{e}_2, \dots, \mathbf{e}_n \} \) is a basis of \( V \), each \( L(\mathbf{e}_i) \) can be uniquely written as a linear combination of the basis vectors:
+\[
+L(\mathbf{e}_i) = a_{1i} \mathbf{e}_1 + a_{2i} \mathbf{e}_2 + \cdots + a_{ni} \mathbf{e}_n.
+\]
+The coefficients \( a_{ji} \in \mathbb{F} \) (where \( \mathbb{F} \) is the field over which \( V \) is defined) form the entries of an \( n \times n \) matrix \( A \), where the \( i \)-th column of \( A \) corresponds to the coordinates of \( L(\mathbf{e}_i) \) in terms of the basis \( \mathbf{e}_1, \dots, \mathbf{e}_n \). Therefore, we can construct the matrix \( A \) as follows:
+\[
+A = \begin{bmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\ a_{21} & a_{22} & \cdots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{n1} & a_{n2} & \cdots & a_{nn} \end{bmatrix}.
+\]
+
+Next, consider any vector \( \mathbf{v} \in V \), which can be written as a linear combination of the basis vectors:
+\[
+\mathbf{v} = c_1 \mathbf{e}_1 + c_2 \mathbf{e}_2 + \cdots + c_n \mathbf{e}_n.
+\]
+Since \( L \) is linear, we have:
+\[
+L(\mathbf{v}) = L(c_1 \mathbf{e}_1 + c_2 \mathbf{e}_2 + \cdots + c_n \mathbf{e}_n) = c_1 L(\mathbf{e}_1) + c_2 L(\mathbf{e}_2) + \cdots + c_n L(\mathbf{e}_n).
+\]
+Substituting the expressions for \( L(\mathbf{e}_i) \), we get:
+\[
+L(\mathbf{v}) = c_1 (a_{11} \mathbf{e}_1 + a_{21} \mathbf{e}_2 + \cdots + a_{n1} \mathbf{e}_n) + \cdots + c_n (a_{1n} \mathbf{e}_1 + a_{2n} \mathbf{e}_2 + \cdots + a_{nn} \mathbf{e}_n).
+\]
+Grouping terms with the same basis vectors, we obtain:
+\[
+L(\mathbf{v}) = \sum_{j=1}^n\left(\sum_{i=1}^n a_{j i} c_i\right) \mathbf{e}_j
+= \left( \sum_{i=1}^n a_{1i} c_i \right) \mathbf{e}_1 + \left( \sum_{i=1}^n a_{2i} c_i \right) \mathbf{e}_2 + \cdots + \left( \sum_{i=1}^n a_{ni} c_i \right) \mathbf{e}_n.
+\]
+This can be written compactly as:
+\[
+L(\mathbf{v}) = A \mathbf{v},
+\]
+where \( A \) is the matrix constructed from the action of \( L \) on the basis vectors.
+
+Thus, we have shown that for any linear operator \( L \), there exists a matrix \( A \) such that \( L(\mathbf{v}) = A \mathbf{v} \) for all \( \mathbf{v} \in V \), contradicting our initial assumption that no such matrix exists.
+
+Therefore, the bijection between linear operators and matrices must exist.
+\end{proof}
+
+That is to say, characteristic equations are unique to each and every possible linear transformation in a vector space. Thus, despite in different context, we can always get identical characteristic equation given that the linear operations behind the scene are the same.
+
+\section*{Question 1}
+We define three arrays, $\{M_n\}, \{I_n\}$, and $\{T_n\}$, where $M_n$ is for the number of matured cells in the nth day, and $I_n$ is for the number of immature cells in the nth day, and $T_n = M_n+I_n$.
+
+Everyday after day 0, the number of immature cells will be the number of mature cells the previous day, and the number of mature cells will be increased by the number of immature cells from the previous day.
+\section*{Question 2}
+By the pattern we identified in the previous question, we have
+\begin{equation}
+    \begin{cases}
+        M_{n+1} = M_n + I_n\\
+        I_{n+1} = M_n
+    \end{cases},
+\end{equation}
+
+and thus 
+\begin{equation}
+    \begin{cases}
+        M_{n+2} = M_{n+1} + I_{n+1} = 2M_n + I_n\\
+        I_{n+2} = M_{n+1} = M_n + I_n
+    \end{cases}.
+\end{equation}
+
+\section*{Question 3}
+\begin{solution}
+$T_n = M_n + I_n \implies T_{n+1} = M_{n+1} + I_{n+1}= 2M_n+I_n$, and $T_{n+2} = M_{n+2} + I_{n+2}= (2M_n+I_n) + (M_n + I_n)$. Note that $T_{n+1} = 2M_n+I_n$ and $T_n = M_n + I_n$, hence $T_{n+2} = M_{n+2} + I_{n+2}$.
+\end{solution}
+
+\section*{Question 4}
+\begin{solution}
+    Since 
+    $\begin{cases}
+        T_{n+1} = 2M_n+I_n\\
+        T_n = M_n + I_n
+    \end{cases}$,
+    $2T_n = 2(M_n + I_n) = 2M_n + 2 I_n$, where $I_n \in \N_0$. Hence, $2M_n+I_n \leq 2M_n + 2 I_n$, and the equality holds iff $I_n = 0$, that is, $T_{n+1}\leq2T_n$.
+\end{solution}
+\section*{Question 5}
+\begin{solution}
+We know that the series must always converge at the first sight, since the denominator are factorial, which in almost all cases, has the dominating growth, and thus, when $i \to \infty$, $\frac{T_i}{i!}x_i \to 0$. So instinctively and non-rigorously, we can see that the radius of convergence is $\infty$.
+
+We can verify this by taking limit over the ratio of the next tern to the previous term and find the radius of convergence when $i\to\infty$.
+
+Let $a_i = \frac{T_i}{i!}x_i$,
+We have 
+$\begin{cases}
+a_{i+1} = \frac{T_{i+1}}{(i+1)!}x_{i+1}\\
+a_i = \frac{T_i}{i!}x_i
+\end{cases}$, and 
+\[
+\lim_{i \to \infty} \frac{a_{i+1}}{a_i} = \frac{xT_{i+1}}{(i+1)T_i}.
+\]
+
+Since $\frac{T_{i+1}}{T_i}\leq2$,
+\[
+\lim_{i \to \infty} \frac{xT_{i+1}}{(i+1)T_i} \equiv \lim_{i \to \infty} \frac{x}{i+1} = 0.
+\]
+
+Hence, $\lim_{i \to \infty} \left|\frac{a_{i+1}}{a_i}\right| < 1$ is always true, that is, the series always converge, and the radius of convergence is $\infty$.
+\end{solution}
+
+\section*{Question 6}
+\begin{solution}
+We first calculate the first order derivative of $f(x)$:
+\[
+f^{\prime}(x)=\frac{d}{d x}\left(\sum_{i=0}^{\infty} \frac{T_i}{i!} x^i\right)=\sum_{i=1}^{\infty} \frac{T_i}{(i-1)!} x^{i-1}
+\]
+
+We reset the index, letting $j=i-1$, hence
+\[
+f^{\prime}(x) = \sum_{i=1}^{\infty} \frac{T_i}{(i-1)!} x^{i-1} =\sum_{j=0}^{\infty} \frac{T_{j+1}}{j!} x^j.
+\]
+
+Substituting $j$ with $i$ again,
+\[
+f^{\prime}(x) = \sum_{i=0}^{\infty} \frac{T_{i+1}}{i!} x^i.
+\]
+
+In the same way, we can find that
+\[
+f^{\prime \prime}(x)=\sum_{i=0}^{\infty} \frac{T_{i+2}}{i!} x^i.
+\]
+
+Now we can substitute all to the differential equation:
+\[
+f^{\prime \prime}(x)-f^{\prime}(x)-f(x) = 0 \iff
+\sum_{i=0}^{\infty} \frac{T_{i+2}}{i!} x^i - \sum_{i=0}^{\infty} \frac{T_{i+1}}{i!} x^i
+- \sum_{i=0}^{\infty} \frac{T_i}{i!} x^i = 0.
+\]
+
+Combine all summations:
+\[
+\sum_{i=0}^{\infty}\frac{T_{i+2}-T_{i+1}-T_{i}}{i!}x^i = 0.
+\]
+
+Note that on LHS, we have 
+\[
+T_{i+2}-T_{i+1}-T_{i} = 0 \impliedby T_n = T_{n-1} + T_{n-2}.
+\]
+
+So by the definition of the recursive relation, we have
+\[
+\sum_{i=0}^{\infty}\frac{T_{i+2}-T_{i+1}-T_{i}}{i!}x^i = 0
+\implies
+f^{\prime \prime}(x)-f^{\prime}(x)-f(x)=0.
+\]
+
+\begin{remark}
+We can actually find an closed form expression for the \textbf{ordinary generative function} for $T_n$ without summation. 
+\begin{definition}[Ordinary Generative Function]
+The generating function for the sequence $a_0, a_1, \ldots, a_k, \ldots$ of real numbers is the infinite series
+$$
+G(x)=a_0+a_1 x+\cdots+a_k x^k+\cdots=\sum_{k=0}^{\infty} a_k x^k。
+$$
+\end{definition}
+
+In open form, we have
+\[
+G(x)=T_0+T_1 x+T_2 x^2+T_3 x^3+T_4 x^4+\ldots.
+\]
+
+Now we separate the base cases and non-base cases,
+\[
+G(x)=T_0+T_1 x+\sum_{i=2}^{\infty} T_i x^i.
+\]
+
+Since $T_i = T_{i-1} + T_{i-2}$:
+\[
+G(x)=T_0+T_1 x+\sum_{i=2}^{\infty}\left(T_{i-1}+T_{i-2}\right) x^i
+\]
+
+After we shift the index:
+\[
+G(x)=T_0+T_1 x+x \sum_{i=1}^{\infty} T_i x^i+x^2 \sum_{i=0}^{\infty} T_i x^i.
+\]
+
+Note that $x\sum_{i=1}^{\infty} T_i x^i+x^2 = xG(x)$, $x^2 \sum_{i=0}^{\infty} T_i x^i = x^2G(x)$:
+\[
+G(x)=T_0+T_1 x+x G(x)+x^2 G(x).
+\]
+
+Since $T_0 = 0, T_1 = 1$,
+\[
+G(x)=0+x+x G(x)+x^2 G(x) \implies G(x)\left(1-x-x^2\right)=x.
+\]
+
+Hence, $G(x) = \frac{x}{1-x-x^2}$.
+
+If we substitute $G(x)$ to the differential equation, we will find that $G(x)$ is also a solution.
+\end{remark}
+\end{solution}
+
+\section*{Question 7}
+\begin{solution}
+By the closed form expression we got earlier, $f(0) = T_0= 0$, since the rest of the terms are all wiped out by 0, and for the same reason, $f^{\prime}(0) = T_1= 1$. 
+\end{solution}
+
+\section*{Question 8}
+\begin{solution}
+Assume $f(x) = e^{\lambda x}$,
+we get the characteristic equation
+\[
+\lambda^2 - \lambda - 1 = 0 \implies \lambda=\frac{1 \pm \sqrt{1^2+4}}{2}=\frac{1 \pm \sqrt{5}}{2}
+\]
+So
+\[
+f(x) = C_1\exp \left(\frac{1+\sqrt{5}}{2}x\right) + C_2\exp \left(\frac{1-\sqrt{5}}{2}x\right).
+\]
+
+and
+\[
+f^\prime(x) = C_1\frac{1+\sqrt{5}}{2}\exp \left(\frac{1+\sqrt{5}}{2}x\right) + C_2\frac{1-\sqrt{5}}{2}\exp \left(\frac{1-\sqrt{5}}{2}x\right).
+\]
+
+\[
+f(0)=0, f^\prime(0) = 1 \implies
+\begin{cases}
+C_1+C_2 = 1\\
+\frac{1+\sqrt{5}}{2}C_1 + \frac{1-\sqrt{5}}{2}C_2 = 1
+\end{cases}
+\implies
+\begin{cases}
+C_1 = \frac{1}{2}+\frac{1}{2\sqrt{5}}\\
+C_2 = \frac{1}{2}-\frac{1}{2\sqrt{5}}
+\end{cases}.
+\]
+
+Hence,
+\[
+f(x) = \left(\frac{1}{2}+\frac{1}{2\sqrt{5}}\right)\exp \left(\frac{1+\sqrt{5}}{2}x\right)
++ \left(\frac{1}{2}-\frac{1}{2\sqrt{5}}\right)\exp \left(\frac{1-\sqrt{5}}{2}x\right).
+\]
+\end{solution}
+\section*{Question 9}
+\begin{solution}
+By $e^t=\sum_0^{\infty} \frac{t^i}{i!}$:
+\[
+f(x) = \left(\frac{1}{2}+\frac{1}{2\sqrt{5}}\right) \sum_{i=0}^{\infty} \frac{\left(\frac{1+\sqrt{5}}{2} x\right)^i}{i!}
++\left(\frac{1}{2}-\frac{1}{2\sqrt{5}}\right)
+\sum_{i=0}^{\infty} \frac{\left(\frac{1-\sqrt{5}}{2} x\right)^i}{i!}
+\]
+Factoring out $\frac{x^i}{i!}$:
+\[
+f(x) = \sum_{i=0}^{\infty} \left[\frac{1}{2}\left(1+\frac{1}{\sqrt{5}}\right)\left(\frac{1+\sqrt{5}}{2}\right)^i 
++ \frac{5-\sqrt{5}}{10}\left(\frac{1-\sqrt{5}}{2}\right)^i\right] \frac{x^i}{i!}.
+\]
+\end{solution}
+
+\section*{Question 10}
+\begin{solution}
+By comparing the previous expression with the closed form given earlier, we know that
+\[
+T_n = \frac{1}{2}\left(1+\frac{1}{\sqrt{5}}\right)\left(\frac{1+\sqrt{5}}{2}\right)^n 
++ \frac{5-\sqrt{5}}{10}\left(\frac{1-\sqrt{5}}{2}\right)^n
+\]
+
+\begin{remark}
+Though this method works, it's still kind of redundant in the real practice, because for such a basic linear recurrence relation, we can solve it quickly by characteristic equation.
+
+We assume that $T_n = r^n$, then
+ \[r^n = r^{n-1} + r^{n-2}.\]
+ Divided by $r^{n-2}$, we get the characteristic equation:
+  \[r^2 = r + 1.\]
+  Solving this, we have
+   \[r = \frac{1 \pm \sqrt{1^2 + 4}}{2} = \frac{1 \pm \sqrt{5}}{2}.\]
+  By theorem \ref{w11:solution},
+  \[T_n = C_1 r_1^n + C_2 r_2^n\]
+
+From the two base cases, we can solve the constants:
+\[
+\begin{cases}
+    C_1 + C_2 = 0\\
+    C_1 r_1 + C_2 r_2 = 1
+\end{cases}
+\implies
+\begin{cases}
+    C_1 = \frac{1}{\sqrt{5}}\\
+    C_2 = -\frac{1}{\sqrt{5}}
+\end{cases}
+\]
+
+\[
+T_n = \frac{1}{\sqrt{5}}\left[\left(\frac{1 + \sqrt{5}}{2}\right)^n - \left(\frac{1 - \sqrt{5}}{2}\right)^n\right]
+\]
+
+This is equivalent to the previous expression we obtained.
+\begin{align*}
+T_n &= \frac{1}{2}\left(1+\frac{1}{\sqrt{5}}\right)\left(\frac{1+\sqrt{5}}{2}\right)^n 
++ \frac{5-\sqrt{5}}{10}\left(\frac{1-\sqrt{5}}{2}\right)^n \\
+&= \frac{\sqrt{5}+1}{2\sqrt{5}}\left(\frac{1+\sqrt{5}}{2}\right)^n + \frac{\sqrt{5}-1}{2\sqrt{5}}\left(\frac{1-\sqrt{5}}{2}\right)^n \\
+&= \frac{1}{2\sqrt{5}}\left[(\sqrt{5}+1)\left(\frac{1+\sqrt{5}}{2}\right)^n + (\sqrt{5}-1)\left(\frac{1-\sqrt{5}}{2}\right)^n\right] \\
+&= \frac{1}{2\sqrt{5}}\left[2\left(\frac{1+\sqrt{5}}{2}\right)^{n+1} - 2\left(\frac{1-\sqrt{5}}{2}\right)^{n+1}\right] \\
+&= \frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^{n+1} - \left(\frac{1-\sqrt{5}}{2}\right)^{n+1}\right] \\
+&= \frac{1}{\sqrt{5}}\left[\left(\frac{1 + \sqrt{5}}{2}\right)^n - \left(\frac{1 - \sqrt{5}}{2}\right)^n\right]
+\end{align*}
+
+Another possible way to get the formula for the $n$th Fibonacci number is treat it as an eigenvalue-eigenvector problem.
+
+Consider:
+\[
+ \begin{bmatrix} F_{n+1} \\ F_n \end{bmatrix} = 
+   \begin{bmatrix} 1 & 1 \\ 1 & 0 \end{bmatrix}
+   \begin{bmatrix} F_n \\ F_{n-1} \end{bmatrix}
+\]
+
+We can get the characteristic equation and eigenvalues:
+\[\det(A - \lambda I) = \begin{vmatrix} 1-\lambda & 1 \\ 1 & -\lambda \end{vmatrix} = \lambda^2 - \lambda - 1 = 0
+\]
+\[
+\lambda_1 = \frac{1 + \sqrt{5}}{2}, \quad \lambda_2 = \frac{1 - \sqrt{5}}{2}
+\]
+For $\lambda_1$: $(A - \lambda_1 I)\mathbf{v_1} = \mathbf{0}$
+   \[\begin{bmatrix} 1-\lambda_1 & 1 \\ 1 & -\lambda_1 \end{bmatrix}\begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}\]
+   
+   This gives: $\mathbf{v_1} = \begin{bmatrix} \lambda_1 \\ 1 \end{bmatrix}$
+
+   Similarly, for $\lambda_2$: $\mathbf{v_2} = \begin{bmatrix} \lambda_2 \\ 1 \end{bmatrix}$
+   
+Thus, the general solution for the Fibonacci numbers in matrix form is:
+\[
+\begin{bmatrix} F_n \\ F_{n-1} \end{bmatrix} = c_1 \lambda_1^n \begin{bmatrix} \lambda_1 \\ 1 \end{bmatrix} + c_2 \lambda_2^n \begin{bmatrix} \lambda_2 \\ 1 \end{bmatrix}
+\]
+
+Using the initial condition:
+\[
+c_1 = \frac{1}{\sqrt{5}}, \quad c_2 = -\frac{1}{\sqrt{5}}
+\]
+\[
+F_n = \frac{1}{\sqrt{5}} \left( \lambda_1^n - \lambda_2^n \right)
+\]
+where:
+\[
+\lambda_1 = \frac{1 + \sqrt{5}}{2}, \quad \lambda_2 = \frac{1 - \sqrt{5}}{2}
+\]
+\end{remark}
+\end{solution}
+
+\section*{Question 11}
+We use the simplified expression to investigate the behaviour of the sequence when $n\to\infty$.
+\[
+T_n = \frac{1}{\sqrt{5}}\left[\left(\frac{1 + \sqrt{5}}{2}\right)^n - \left(\frac{1 - \sqrt{5}}{2}\right)^n\right]
+\]
+
+We can drop the constant straight away:
+\[
+\begin{aligned}
+\lim _{n\rightarrow \infty } T_n & =\left[\left(\frac{1 + \sqrt{5}}{2}\right)^n - \left(\frac{1 - \sqrt{5}}{2}\right)^n\right]\\
+\end{aligned}
+\]
+By linearity of limit:
+\[
+\lim _{n\rightarrow \infty } T_n = 
+\lim _{n\rightarrow \infty } \left(\frac{1 + \sqrt{5}}{2}\right)^n
+-\lim _{n\rightarrow \infty }\left(\frac{1 - \sqrt{5}}{2}\right)^n.
+\]
+Since $\frac{1 + \sqrt{5}}{2} > 1$ and $-1<\frac{1 - \sqrt{5}}{2} < 0$,
+\[
+\lim _{n\rightarrow \infty } \left(\frac{1 + \sqrt{5}}{2}\right)^n = \infty,\,
+\lim _{n\rightarrow \infty }\left(\frac{1 - \sqrt{5}}{2}\right)^n=0.
+\]
+Hence,
+\[
+\lim _{n\rightarrow \infty } T_n = \infty.
+\]
+This means that the series increasing continuously as $n$ increases.
+
+\section*{Question 12}
+Since when are approximating the number of days when the number hit 10000, we can ignore $\left(\frac{1 - \sqrt{5}}{2}\right)^n$.
+
+Hence, we need to solve
+\[
+10000 = \frac{1}{\sqrt{5}}\left(\frac{1 + \sqrt{5}}{2}\right)^n
+\]
+
+\begin{align*}
+10000 &= \frac{1}{\sqrt{5}}\left(\frac{1 + \sqrt{5}}{2}\right)^n \\
+10000 \times \sqrt{5} &= \left(\frac{1 + \sqrt{5}}{2}\right)^n \\
+\ln\left(10000 \times \sqrt{5}\right) &= n \ln\left(\frac{1 + \sqrt{5}}{2}\right) \\
+n &= \frac{\ln\left(10000 \times \sqrt{5}\right)}{\ln\left(\frac{1 + \sqrt{5}}{2}\right)} \\
+n &\approx 20.81
+\end{align*}
+
+Hence, it takes 20-21 days to reach 10000 cells.
+\end{document}

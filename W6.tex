@@ -1,0 +1,390 @@
+\documentclass[12pt,a4paper]{article}
+\input{math_setup}
+
+\begin{document}
+
+\title{ENG1005 Week6 Workshop Problem Set Solutions}
+\author{Yang Xingyu (33533563)}
+\date{\today}
+\maketitle
+
+\section*{Problem 1}
+\begin{solution}
+From last week, at the minimum, we have 
+$$\nabla T = \left(0.12(x - 5), 0.12(y - \frac{10}{3})\right) = \0 \implies 
+\begin{cases}
+        x = 5\\
+        y = \frac{10}{3}
+\end{cases}.$$
+\end{solution}
+
+\section*{Problem 2}
+\begin{solution}
+We have the first derivative from last week:
+
+\begin{align*}
+    T_x = \frac{\partial T}{\partial x} &= 0.02 \times \frac{\partial \left(3x^{2} + 3y^{2} - 30x - 20y + 325\right)}{\partial x} \\
+    &= 0.02 \times \left(\frac{\partial (3x^{2})}{\partial x} + \frac{\partial (3y^{2})}{\partial x} - \frac{\partial (30x)}{\partial x} - \frac{\partial (20y)}{\partial x} + \frac{\partial (325)}{\partial x}\right) \\
+    &= 0.02 \times \left(6x + 0 - 30 - 0 + 0\right) \\
+    &= 0.02 \times \left(6x - 30\right) \\
+    &= 0.02 \times 6(x - 5) \\
+    &= 0.12(x - 5),
+\end{align*}
+
+\begin{align*}
+    T_y = \frac{\partial T}{\partial y} &= 0.02 \times \frac{\partial \left(3x^{2} + 3y^{2} - 30x - 20y + 325\right)}{\partial y} \\
+    &= 0.02 \times \left(\frac{\partial (3x^{2})}{\partial y} + \frac{\partial (3y^{2})}{\partial y} - \frac{\partial (30x)}{\partial y} - \frac{\partial (20y)}{\partial y} + \frac{\partial (325)}{\partial y}\right) \\
+    &= 0.02 \times \left(0 + 6y - 0 - 20 + 0\right) \\
+    &= 0.02 \times \left(6y - 20\right) \\
+    &= 0.02 \times 6(y - \frac{10}{3}) \\
+    &= 0.12(y - \frac{10}{3}).
+\end{align*}
+
+With these, we calculate the second-order derivatives.
+
+\begin{align*}
+    T_{xx} &= \frac{\partial T_x}{\partial x} = \frac{\partial}{\partial x} \left(0.12(x - 5)\right) \\
+    &= 0.12 \times \frac{\partial (x - 5)}{\partial x} \\
+    &= 0.12 \times 1 \\
+    &= 0.12,
+\end{align*}
+
+\begin{align*}
+    T_{yy} &= \frac{\partial T_y}{\partial y} = \frac{\partial}{\partial y} \left(0.12(y - \frac{10}{3})\right) \\
+    &= 0.12 \times \frac{\partial (y - \frac{10}{3})}{\partial y} \\
+    &= 0.12 \times 1 \\
+    &= 0.12,
+\end{align*}
+
+\begin{align*}
+    T_{xy} = T_{yx} &= \frac{\partial T_x}{\partial y} = \frac{\partial}{\partial y} \left(0.12(x - 5)\right) \\
+    &= 0.12 \times \frac{\partial (x - 5)}{\partial y} \\
+    &= 0.12 \times 0 \\
+    &= 0.
+\end{align*}
+
+Now we proceed to the second derivative test.
+
+The determinant of the Hessian matrix $H = 
+\begin{bmatrix}
+    T_{xx}&T_{xy}\\
+    T_{yx}&T_{yy}
+\end{bmatrix}$ is given by:
+
+\begin{align*}
+    \det(H) &= T_{xx} \cdot T_{yy} - (T_{xy})^2 \\
+    &= (0.12) \cdot (0.12) - (0)^2 \\
+    &= 0.0144.
+\end{align*}
+
+Since the determinant of the determinant is positive and \( T_{xx} = 0.12 > 0 \) and $T_{xx} > 0$, the function \( T(x, y) \) has a \textbf{local minimum} at \( \left(x, y\right) = \left(5, \frac{10}{3}\right) \).
+\end{solution}
+
+
+\section*{Problem 3}
+\begin{solution}
+The optimised position of the access point must be on the edge of the triangle. A non-rigorous explanation is as follows:
+
+When we seek the optimised point within the triangular area where \( T \) is minimised, it is observed that the global minimum of \( T \) occurs outside the triangular area at the point \(\left(5, \frac{10}{3}\right)\). Since \( T(x, y) \) is a quadratic function, it is convex, meaning that any local minimum within a convex region like our triangle, if not in the interior, must occur on the boundary.
+
+Given that the set of all points in the triangular area lies within the domain of \( T \), the boundaries of this area capture all possible edge cases for this constrained optimisation problem. Therefore, when optimising \( T \) under these constraints, it is sufficient to only consider the three edges of the triangle.
+\end{solution}
+
+
+\section*{Problem 4}
+\begin{solution}
+We can get the equation of the line between $(4, 0)$ and $(0, 2)$ using two-point form.
+
+Let the points be:
+\[
+(x_1, y_1) = (0, 2) \quad \text{and} \quad (x_2, y_2) = (4, 0)
+\]
+
+The two-point form of the equation of a line is given by:
+\[
+\frac{y - y_1}{y_2 - y_1} = \frac{x - x_1}{x_2 - x_1}
+\]
+Substituting the coordinates of the points \((0, 2)\) and \((4, 0)\), we get:
+\[
+\frac{y - 2}{0 - 2} = \frac{x - 0}{4 - 0}
+\]
+
+This simplifies to
+
+\[
+x+2y-4=0,
+\]
+which is the equation of the line passing through the points \((0, 2)\) and \((4, 0)\).
+
+\end{solution}
+
+\section*{Problem 5}
+\begin{solution}
+
+From the previous problem, we have derived that \( x \) can be expressed in terms of \( y \) as \( x = 4 - 2y \).
+
+This relationship allows us to constrain the function \( T(x, y) \) to the diagonal of the triangular area, where \( y \in [0, 2] \). Substituting this expression for \( x \) into the function \( T \), we obtain a new function \( T(y) \) that depends only on \( y \):
+
+\[
+T(y) = \frac{1}{50} \left(15y^2 - 8y + 253\right).
+\]
+
+This is a quadratic function, which has a unique global minimum. To find the value of \( y \) that minimizes \( T(y) \), we compute the derivative \( T'(y) \) and solve for \( y \) where \( T'(y) = 0 \):
+
+\[
+\frac{dT}{dy} = 30y - 8.
+\]
+
+Setting the derivative equal to zero to find the minimum:
+
+\[
+30y - 8 = 0 \implies y = \frac{4}{15}.
+\]
+
+Substituting this value of \( y \) back into the expression for \( x \), we get:
+
+\[
+x = 4 - 2y = 4 - 2 \times \frac{4}{15} = \frac{52}{15}.
+\]
+
+Thus, the minimum power consumption is achieved at the point \( \left(\frac{13}{15}, \frac{4}{15}\right) \).
+
+\end{solution}
+
+\begin{remark}
+To provide a more rigorous explanation of the parametrization used in this problem, we can define a linear map \( \phi: \mathbb{R} \to \mathbb{R}^2 \) such that:
+
+\[
+\phi(y) = (-2y + 4, y).
+\]
+
+This linear map \( \phi \) transforms the parameter \( y \) into a point on the diagonal line of the triangular region, which is a subspace of the domain of \( T(x, y) \). The process of parametrization can be viewed as a composition of functions:
+
+\[
+T \circ \phi: \mathbb{R} \to \mathbb{R}, \quad \text{where} \quad T(y) = (T \circ \phi)(y) = T(\phi(y)) = T(-2y + 4, y).
+\]
+
+Thus, the function \( T(y) \) simplifies to:
+
+\[
+T(y) = \frac{1}{50} \left(15y^2 - 8y + 253\right).
+\]
+
+In summary, the parametrization maps the original domain of \( T(x, y) \) (a two-dimensional space) onto a lower-dimensional parameter space (a one-dimensional line). This reduced space is then mapped back into the image space through the composition \( T \circ \phi \), allowing us to analyze the behavior of \( T \) along the specified line in a more straightforward manner.
+
+Additionally, this is only one type of parametrization. Practically, we often parameterize functions using variables that are not directly related to the argument space of the function (heterogeneous parametrization). The method of parameterizing a function can vary. 
+
+Let's consider another approach to parameterizing \( T \), where we introduce an independent variable \( t \) such that \( t \cap \text{dom}(T) = \emptyset \). Since we know the relationship between \( x \) and \( y \), we can express them as functions of \( t \) using bijective mappings. Specifically, we define:
+
+\[
+x(t) = f(t), \quad y(t) = g(t),
+\]
+
+and consequently,
+
+\[
+T(t) = T(f(t), g(t)),
+\]
+
+where
+
+\[
+g(t) = t, \quad f(t) = -2t + 4.
+\]
+
+Thus, we obtain:
+
+\[
+T(t) = \frac{1}{50} \left(15t^2 - 8t + 253\right).
+\]
+
+This demonstrates that parametrization can be achieved through different methods, each suitable under certain conditions. The first approach (direct parametrization with \( y \)) is simpler when the relationship between variables is known, while the second method (heterogeneous parametrization) is more general.
+In a broader context, parametrization can also be understood through the lens of higher-order functions. Before that, we can formally define parametrization.
+\begin{definition}[Parametrization]
+Let \( f: \mathbb{R}^n \to \mathbb{R}^m \) be a function that maps each point in \( \mathbb{R}^n \) to a point in \( \mathbb{R}^m \). A parametrization of \( f \) involves introducing a new parameter space \( \mathbb{R}^k \) and defining a parametrization map \( \phi: \mathbb{R}^k \to \mathbb{R}^n \), which describes how the original function \( f \) can be expressed through this parametrization map. The new composite function \( f \circ \phi \) is then a mapping from the parameter space \( \mathbb{R}^k \) to the target space \( \mathbb{R}^m \).
+
+Formally, the parametrization map \( \phi \) is defined as:
+\[
+\phi(\mathbf{t}) = \left( x_1(t_1, \dots, t_k), x_2(t_1, \dots, t_k), \dots, x_n(t_1, \dots, t_k) \right),
+\]
+
+where \( \mathbf{t} = (t_1, t_2, \dots, t_k) \in \mathbb{R}^k \), and each component function \( x_i: \mathbb{R}^k \to \mathbb{R} \) for \( i = 1, 2, \dots, n \) is a scalar function defined on \( \mathbb{R}^k \).
+
+The composition of functions is then given by:
+\[
+(f \circ \phi)(\mathbf{t}) = f(\phi(\mathbf{t})) = f\left( x_1(t_1, \dots, t_k), x_2(t_1, \dots, t_k), \dots, x_n(t_1, \dots, t_k) \right).
+\]
+
+This composite function \( f \circ \phi \) describes how the parameter space \( \mathbb{R}^k \) is mapped into the image space \( \mathbb{R}^m \).
+
+In this setup:
+\begin{itemize}
+    \item \( \mathbf{t} = (t_1, t_2, \dots, t_k) \in \mathbb{R}^k \), where \( t_i \in [a_i, b_i] \) for \( i = 1, 2, \dots, k \).
+    \item \( x_i: \mathbb{R}^k \to \mathbb{R} \), where each \( x_i \) is a function of the parameters \( t_1, t_2, \dots, t_k \).
+    \item \( \phi: \mathbb{R}^k \to \mathbb{R}^n \) maps the parameter space \( \mathbb{R}^k \) into the domain of \( f \), which is \( \mathbb{R}^n \).
+    \item \( f: \mathbb{R}^n \to \mathbb{R}^m \) maps the domain \( \mathbb{R}^n \) into the target space \( \mathbb{R}^m \).
+\end{itemize}
+
+Thus, the overall mapping \( f \circ \phi \) transforms the parameter space \( \mathbb{R}^k \) into the target space \( \mathbb{R}^m \) through an intermediate step that passes through \( \mathbb{R}^n \).
+
+\end{definition}
+
+Interestingly, parametrization can also be interpreted using the concept of \textit{higher-order functions}.
+
+\begin{definition}[Higher-Order Function]
+A function \( H \) is called a higher-order function if it either:
+\begin{enumerate}
+    \item Takes one or more functions as arguments, or
+    \item Returns a function as its output.
+\end{enumerate}
+
+Formally, let \( X \), \( Y \), \( Z \), and \( W \) be sets. \( H \) is a higher-order function if:
+
+\[
+H: (X \to Y) \times Z \to W \quad \text{or} \quad H: (X \to Y) \times Z \to (Z \to W),
+\]
+
+where \( H(f, z) \) either maps \( Z \) to \( W \) or produces a function mapping \( Z \) to \( W \).
+\end{definition}
+
+In this context, we can see that the process of parametrization can be understood as a higher-order function that takes a parametrization map (a function) as input and produces a new function (the parametrized function) or a value.
+
+In the context of this problem, \( T(t) \) can be viewed as a higher-order function. By definition, a higher-order function is one that either takes another function as an argument or returns a function as its result. The function \( T(t) \) is defined as \( T(t) = T(f(t), g(t)) \), where \( f(t) \) and \( g(t) \) are themselves functions that map the independent variable \( t \) to the original function's domain. This composition of functions—where \( T(t) \) relies on the outputs of \( f(t) \) and \( g(t) \)—demonstrates the higher-order nature of \( T(t) \), as it takes other functions (in this case, \( f(t) \) and \( g(t) \)) as inputs to produce its output. This characteristic aligns with the definition of higher-order functions, where the construction of \( T(t) \) involves a layer of abstraction over the functions \( f(t) \) and \( g(t) \), effectively making \( T(t) \) a function of functions.
+
+\end{remark}
+\section*{Problem 6}
+To obtain the position of minimum consumption on the other two edges of the table, we only need to substitute the constraint to $T(x,y)$ respectively.
+
+We first consider the horizontal edge.
+
+Form what was given, the line can be expressed as $y=0$, substitute to $T(x,y)$ we have
+\[
+{T}({x}, 0)=0.02\left(3 x^2+3(0)-30 x-20(0)+325\right) = \frac{1}{50}\left(3 x^2-30 x+325\right),
+\]
+where $x\in[0,4]$
+
+Differentiate, we have
+\[
+\frac{dT}{dx} = \frac{1}{50}(6x-30),
+\]
+
+so $\arg({T^\prime(x)=0})=5$. While $x\in[0,4]$, $\arg(\min(T(x,0)) = (4,0)$.
+
+Thus the consumption is lowest on this edge at $(4,0)$.
+
+Now we consider the vertical edge.
+The line can be expressed by $x = 0$, substitute to $T(x,y)$ we have
+\[
+{T}(0, {y})=0.02\left(3 y^2-20 y+325\right),
+\]
+where $y\in[0,2]$.
+
+Similarly, taking into the range of $y$, $\arg(\min(T(0,y)) = (0,2)$
+
+Thus the consumption is lowest on this edge at $(0,2)$.
+
+Now we simply need to compare $T(0,2), T(4,0),$ and $T\left(\frac{13}{15}, \frac{4}{15}\right)$ to find the minimum.
+
+$$\begin{aligned}
+& T(0,2)=\frac{297}{50}=5.94 \\
+& T(4,0)=\frac{253}{50}=5.06 \\
+& T\left(\frac{52}{15}, \frac{4}{15}\right)=\frac{3779}{750} \approx 5.039
+\end{aligned}$$
+Hence, $T$ is optimised on the table at $\left(\frac{52}{15}, \frac{4}{15}\right)$.
+\section*{Problem 7}
+\begin{solution}
+When it is minimised, the access point must be on the boundary of the oval table. Substitute $\left(5, \frac{10}{3}\right)$ into the equation, we have 
+\[
+(5-7)^2+\frac{1}{2}(\frac{10}{3}-5)^2 = \frac{97}{18}>1.
+\]
+So the point where global minimum is found is not in this area. Thus, we must find the constrained minimum on the edge of the oval table.
+\end{solution}
+
+\section*{Problem 8}
+\begin{solution}
+We first obtaining the oval's equation by rewriting the expression by replacing the inequality sign with equal sign.
+$$(x,y)=(x-7)^2+\frac{1}{2}(y-5)^2=1.$$
+
+Since we know it's on the edge, the constraint function is
+$$g(x,y)=(x-7)^2+\frac{1}{2}(y-5)^2 - 1 = 0.$$
+\end{solution}
+
+\section*{Problem 9}
+\begin{solution}
+We can construct the Lagrange function
+\begin{align*}
+\mathcal{L}(x, y, \lambda) &= T(x, y) + \lambda g(x, y) \\
+&= \frac{1}{50} \left(3x^2 + 3y^2 - 30x - 20y + 325\right) + \lambda \left((x - 7)^2 + \frac{1}{2}(y - 5)^2 - 1\right)
+\end{align*}
+
+Now we can get the optimised condition $\nabla \mathcal{L} = \0$.
+\[
+\begin{cases}
+\frac{\partial \mathcal{L}}{\partial x} = \frac{1}{50}(6x - 30) + 2\lambda(x - 7) = 0, \\
+\frac{\partial \mathcal{L}}{\partial y} = \frac{1}{50}(6y - 20) + \lambda(y - 5) = 0, \\
+\frac{\partial \mathcal{L}}{\partial \lambda} = (x - 7)^2 + \frac{1}{2}(y - 5)^2 - 1 = 0.
+\end{cases}
+\]
+\end{solution}
+\section*{Problem 10}
+\begin{solution}
+Expressing $x,y$ in terms of $\lambda$.
+\begin{align*}
+    \frac{1}{50}(6x - 30) + 2\lambda(x - 7) &= 0\\
+    6x-30&=-100\lambda(x-7)\\
+    6x + 100\lambda x&=30+700\lambda\\
+    x(6+100\lambda)&=30+700\lambda\\
+    x&=\frac{30+700\lambda}{6+100\lambda} = \frac{15+350\lambda}{3+50\lambda}
+\end{align*}
+
+\begin{align*}
+    \frac{1}{50}(6x - 20) + \lambda(y - 5) &= 0\\
+    6y - 20 &=-50\lambda(y - 5)\\
+    6y + 50\lambda y&=20+250\lambda\\
+    y(6+50\lambda) &=20+250\lambda\\
+    y&=\frac{20+250\lambda}{6+50\lambda} = \frac{10+125\lambda}{3+25\lambda}
+\end{align*}
+\end{solution}
+
+\section*{Problem 11}
+\begin{solution}
+    Substitute 
+    \[
+x = \frac{15 + 350\lambda}{3 + 50\lambda}, \quad y = \frac{10 + 125\lambda}{3 + 25\lambda}
+\]
+into
+\[
+g(x, y) = (x - 7)^2 + \frac{1}{2}(y - 5)^2 = 1,
+\]
+we have
+\[
+\left(\frac{15 + 350\lambda}{3 + 50\lambda} - 7\right)^2 + \frac{1}{2} \left(\frac{10 + 125\lambda}{3 + 25\lambda} - 5\right)^2 = 1
+\]
+whose real solutions are 
+\[
+\begin{cases}
+    \lambda_1\approx-0.29\\
+    \lambda_2\approx0.10
+\end{cases}
+\]
+\end{solution}
+
+\section*{Problem 12}
+\begin{solution}
+When \(\lambda_1 \approx -0.29\):
+   \[
+   x_1 = \frac{15 + 350(-0.29)}{3 + 50(-0.29)} \approx 7.52, \quad y_1 = \frac{10 + 125(-0.29)}{3 + 25(-0.29)} \approx 6.18
+   \]
+When \(\lambda_4 \approx 0.10\):
+ \[
+   x_2 = \frac{15 + 350(0.10)}{3 + 50(0.10)} \approx 6.25, \quad y_2 = \frac{10 + 125(0.10)}{3 + 25(0.10)} \approx 4.09
+   \]
+
+To find the minimised position, we compare $T(x_1,y_1)$ and $T(x_2,y_2)$.
+
+By Mathematica, $T(x_1,y_1) \approx 5.20$, $T(x_2,y_2)\approx4.46$.
+
+Hence,$(6.25,4.09)$ is the most power efficient position.
+
+ \end{solution}  
+\end{document}
